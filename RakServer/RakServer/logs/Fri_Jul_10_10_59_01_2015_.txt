@@ -1,0 +1,1 @@
+2015-07-10 10:59:01,657 INFO  [default] Connection to the database was succesful!

@@ -1,0 +1,7 @@
+2015-07-21 21:55:39,543 INFO  [default] Connection to the database was succesful!
+2015-07-21 21:55:39,580 INFO  [default] Starting the server...
+2015-07-21 21:55:39,584 INFO  [default] Server has been started! Listening for conections...
+2015-07-21 21:55:39,592 INFO  [default] A message with ID: 16 has been arrived!
+2015-07-21 21:55:39,598 INFO  [default] Pooler accepted our connection!
+2015-07-21 21:55:39,602 INFO  [default] Writing pooler key, which is: topsecret
+2015-07-21 21:55:39,608 INFO  [default] Sending auth packet

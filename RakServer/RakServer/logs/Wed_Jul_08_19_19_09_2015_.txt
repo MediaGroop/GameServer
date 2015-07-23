@@ -1,0 +1,9 @@
+2015-07-08 19:19:09,471 INFO  [default] Netowrk-ServerPort 67534
+2015-07-08 19:19:09,476 INFO  [default] Netowrk-PoolerPort 66534
+2015-07-08 19:19:09,480 INFO  [default] Netowrk-ShardName Generic
+2015-07-08 19:19:09,485 INFO  [default] Netowrk-MaxPlayer 1000
+2015-07-08 19:19:09,489 INFO  [default] Database-Name data
+2015-07-08 19:19:09,493 INFO  [default] Database-Login postgres
+2015-07-08 19:19:09,499 INFO  [default] Database-Password root
+2015-07-08 19:19:09,502 INFO  [default] Database-Host localhost
+2015-07-08 19:19:09,508 INFO  [default] Database-Port 5432
