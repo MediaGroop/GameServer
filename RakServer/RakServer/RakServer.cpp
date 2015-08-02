@@ -9,9 +9,7 @@
 #include "ConfigLoader.h"
 #include "Server.h"
 #include "Client.h"
-//Handlers
-//Server
-//Pooler client
+#include "PacketTypes.h"
 
 #define ELPP_STL_LOGGING
 #define ELPP_PERFORMANCE_MICROSECONDS
@@ -23,9 +21,11 @@
 //Handlers
 //Server
 #include "ServerConnectHandler.h"
+#include "GameServerDisconnectHandler.h"
+#include "VerificationHandler.h"
 //Client
 #include "PoolerClientConnectHandler.h"
-
+#include "VerifyResponseHandler.h"
 INITIALIZE_EASYLOGGINGPP
 
 //Configuring easyLogging
@@ -68,6 +68,9 @@ int main(int argc, const char** argv)
 	//Server init
 	NetworkListener listen;
 	listen.add((short)ID_NEW_INCOMING_CONNECTION, handleconn); // Server conenct handler
+	listen.add((short)ID_CONNECTION_LOST, handledisconn); // Server disconnect handler
+	listen.add((short)VERIFY_ACCOUNT, handleVerify); // Server data verification handler
+
 	Server srv(&listen);
 	
 	mainServer = &srv;
@@ -78,7 +81,9 @@ int main(int argc, const char** argv)
 	//Client init
 	NetworkListener clientListen;
 	clientListen.add((short)ID_CONNECTION_REQUEST_ACCEPTED, registerServer); // PoolerClientConnectHandler.h
+	clientListen.add((short)VERIFY_RESPONSE, verifyResultHandler); // VerifyResponseHandler.h
 
+	
 	Client clnt(&clientListen);
 
 	poolerClient = &clnt;

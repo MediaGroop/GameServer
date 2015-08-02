@@ -1,9 +1,0 @@
-2015-07-08 19:08:07,139 INFO  [default] Netowrk-ServerPort 67534
-2015-07-08 19:08:07,159 INFO  [default] Netowrk-PoolerPort 66534
-2015-07-08 19:08:07,169 INFO  [default] Netowrk-ShardName Generic
-2015-07-08 19:08:07,182 INFO  [default] Netowrk-MaxPlayer 1000
-2015-07-08 19:08:07,188 INFO  [default] Database-Name game
-2015-07-08 19:08:07,190 INFO  [default] Database-Login root
-2015-07-08 19:08:07,200 INFO  [default] Database-Password root
-2015-07-08 19:08:07,210 INFO  [default] Database-Host localhost
-2015-07-08 19:08:07,222 INFO  [default] Database-Port 3306

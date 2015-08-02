@@ -1,2 +1,0 @@
-2015-07-08 19:35:24,611 INFO  [default] Connection to the database was succesful!
-2015-07-08 19:35:24,627 ERROR [default] There's no value with given name!

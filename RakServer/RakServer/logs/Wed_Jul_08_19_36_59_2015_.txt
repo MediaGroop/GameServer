@@ -1,4 +1,0 @@
-2015-07-08 19:36:59,096 INFO  [default] Connection to the database was succesful!
-2015-07-08 19:36:59,100 ERROR [default] There's no value with given name!
-2015-07-08 19:36:59,104 FATAL [default] CRASH HANDLED; Application has crashed due to [SIGSEGV] signal
-2015-07-08 19:36:59,109 WARN  [default] Aborting application. Reason: Fatal log at [c:\users\alastar\documents\visual studio 2013\projects\rakserver\rakserver\easylogging++.h:5583]

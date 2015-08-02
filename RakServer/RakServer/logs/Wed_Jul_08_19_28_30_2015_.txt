@@ -1,1 +1,0 @@
-2015-07-08 19:28:30,781 INFO  [default] Connection to the database was succesful!

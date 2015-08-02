@@ -25,6 +25,15 @@
     <Filter Include="Файлы исходного кода\RakNet">
       <UniqueIdentifier>{145b24fa-c3bf-47fb-a2c1-c66ecf255dbf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы исходного кода\Server\Packets">
+      <UniqueIdentifier>{2d7b5d59-7c02-4d6b-8a00-22bc0bf5804e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Server\Packets">
+      <UniqueIdentifier>{05986400-9662-46d5-aaa3-a01245890287}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Заголовочные файлы\Server\Handlers">
+      <UniqueIdentifier>{c482b1ec-bbec-410a-99fc-36724c2ce08d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -36,9 +45,6 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
-    <ClInclude Include="AuthPoolerPacket.h">
-      <Filter>Заголовочные файлы\Server</Filter>
     </ClInclude>
     <ClInclude Include="Chunk.h">
       <Filter>Заголовочные файлы\Server</Filter>
@@ -67,16 +73,7 @@
     <ClInclude Include="NetworkListener.h">
       <Filter>Заголовочные файлы\Server</Filter>
     </ClInclude>
-    <ClInclude Include="Packet.h">
-      <Filter>Заголовочные файлы\Server</Filter>
-    </ClInclude>
-    <ClInclude Include="PoolerClientConnectHandler.h">
-      <Filter>Заголовочные файлы\Server</Filter>
-    </ClInclude>
     <ClInclude Include="Server.h">
-      <Filter>Заголовочные файлы\Server</Filter>
-    </ClInclude>
-    <ClInclude Include="ServerConnectHandler.h">
       <Filter>Заголовочные файлы\Server</Filter>
     </ClInclude>
     <ClInclude Include="ServVars.h">
@@ -553,11 +550,38 @@
     <ClInclude Include="..\Deps\Rak-Net\Source\VariableListDeltaTracker.h">
       <Filter>Заголовочные файлы\RakNet</Filter>
     </ClInclude>
+    <ClInclude Include="PacketTypes.h">
+      <Filter>Заголовочные файлы\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthPoolerPacket.h">
+      <Filter>Заголовочные файлы\Server\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="GameServerDisconnectHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="PoolerClientConnectHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerConnectHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="VerificationHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="VerifyPacket.h">
+      <Filter>Заголовочные файлы\Server\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="Packet.h">
+      <Filter>Заголовочные файлы\Server\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="VerifyResponseHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="VerifyResponsePacket.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AuthPoolerPacket.cpp">
-      <Filter>Файлы исходного кода\Server</Filter>
-    </ClCompile>
     <ClCompile Include="Client.cpp">
       <Filter>Файлы исходного кода\Server</Filter>
     </ClCompile>
@@ -917,6 +941,15 @@
     </ClCompile>
     <ClCompile Include="..\Deps\Rak-Net\Source\TwoWayAuthentication.cpp">
       <Filter>Файлы исходного кода\RakNet</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthPoolerPacket.cpp">
+      <Filter>Файлы исходного кода\Server\Packets</Filter>
+    </ClCompile>
+    <ClCompile Include="VerifyPacket.cpp">
+      <Filter>Файлы исходного кода\Server\Packets</Filter>
+    </ClCompile>
+    <ClCompile Include="VerifyResponsePacket.cpp">
+      <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
