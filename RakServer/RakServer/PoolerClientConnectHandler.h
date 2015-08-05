@@ -6,6 +6,7 @@
 
 void registerServer(RakNet::Packet *packet){
 	LOG(INFO) << "Pooler accepted our connection!";
+	poolerClient->serverAddress = packet->systemAddress;
 	AuthPoolerPacket p;
 	p.send(poolerClient->peer, packet->systemAddress);
 	LOG(INFO) << "Sending auth packet";

@@ -1,35 +1,42 @@
 #pragma once
 #include "stdafx.h"
 #include "VerifyResponsePacket.h"
+#include "Utils.h"
+#include "easylogging++.h"
 
 void verifyResultHandler(RakNet::Packet *packet){
 	RakNet::BitStream bsIn(packet->data, packet->length, false);
 	bsIn.IgnoreBytes(sizeof(RakNet::MessageID));
 
-	RakNet::RakString hash;
+	unsigned char hash[20];
 	unsigned char response;
 
 	bsIn.Read(response);
-	bsIn.Read(hash);
+
+	for (int i = 0; i < 20; ++i){
+		bsIn.Read(hash[i]);
+	}
 
 	for (map<RakNet::RakNetGUID, ConnectedClient>::iterator ii = mainServer->_connections.begin(); ii != mainServer->_connections.end(); ++ii)
 	{
-		if ((*ii).second.hash == hash)
+		if (compareHashes((*ii).second.getHash(), hash))
 		{
 			VerifyResponsePacket p(response);
-
 			//dynamic hash equals
-			switch(response)
+			switch (response)
 			{
-				case 0:
-					p.send(mainServer->peer, (*ii).second.addr);
-					break;
-				case 1:
-					p.send(mainServer->peer, (*ii).second.addr);
-					mainServer->peer->CloseConnection((*ii).second.addr, true);//disconnect client
-					mainServer->removeClient((*ii).second.addr.rakNetGuid);
-					(*ii).second.onDisconnect();
-					break;
+			case 0:
+				LOG(INFO) << "Verification success!";
+				p.send(mainServer->peer, (*ii).second.getAddrOrGUID());
+				break;
+			case 1:
+				LOG(INFO) << "Verification failed!";
+				p.send(mainServer->peer, (*ii).second.getAddrOrGUID());
+				mainServer->peer->CloseConnection((*ii).second.getAddrOrGUID(), true);//disconnect client
+				(*ii).second.onDisconnect();
+				mainServer->removeClient(mainServer->peer->GetGuidFromSystemAddress((*ii).second.getAddrOrGUID().systemAddress));
+				(*ii).second.onDisconnect();
+				break;
 			}
 		}
 	}

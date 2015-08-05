@@ -22,7 +22,6 @@ void Server::startMainNetworkThread(Server* instance, int port, int maxPlayers){
 		}
 	}
 
-
 	RakNet::RakPeerInterface::DestroyInstance(instance->peer);
 }
 

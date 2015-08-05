@@ -8,7 +8,6 @@ void handleconn(RakNet::Packet *packet){
 	LOG(INFO) << "Incoming connection!";
 	if (!mainServer->hasClient(packet->guid)) // Won't it always be true?
 	{
-		ConnectedClient cl(packet->systemAddress);
-		mainServer->addClient(packet->guid, cl);
+		mainServer->addClient(packet->guid, *new ConnectedClient(packet->systemAddress));
 	}
 }

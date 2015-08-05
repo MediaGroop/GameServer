@@ -7,8 +7,8 @@ void handledisconn(RakNet::Packet *packet){
 	ConnectedClient* cc = mainServer->getClient(packet->guid);
 	if (cc != nullptr)
 	{
-		mainServer->removeClient(packet->guid);
 		cc->onDisconnect();
+		mainServer->removeClient(packet->guid);
 	}
 	LOG(INFO) << "Client disconnected...";
 };

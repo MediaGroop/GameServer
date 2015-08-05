@@ -580,6 +580,9 @@
     <ClInclude Include="VerifyResponsePacket.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Заголовочные файлы\Server</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">

@@ -3,25 +3,6 @@
 
 void Client::startNetworkTrd(Client* clnt, std::string h, int port)
 {
-	/*clnt->sslClient = RakNet::OP_NEW<RakNet::TCPInterface>(__FILE__, __LINE__);
-	clnt->sslClient->Start(0, 1);
-	clnt->sslClient->Connect(h.c_str(), port, true);
-	clnt->serverAddress = clnt->sslClient->HasCompletedConnectionAttempt();
-
-	RakNet::Packet *packet;
-
-	clnt->running = true;
-	while (clnt->running)
-	{
-		Sleep(1);
-		for (packet = clnt->sslClient->Receive(); packet; clnt->sslClient->DeallocatePacket(packet), packet = clnt->sslClient->Receive())
-		{
-			clnt->listener->handle(packet);
-		}
-	}
-
-	RakNet::TCPInterface::DestroyInstance(clnt->sslClient);
-	*/
 	clnt->peer = RakNet::RakPeerInterface::GetInstance();
 	RakNet::Packet *packet;
 
@@ -37,7 +18,8 @@ void Client::startNetworkTrd(Client* clnt, std::string h, int port)
 			clnt->listener->handle(packet);
 		}
 	}
-
+	clnt->peer->CloseConnection(clnt->serverAddress, true);
+	clnt->peer->Shutdown(1);
 	RakNet::RakPeerInterface::DestroyInstance(clnt->peer);
 }
 

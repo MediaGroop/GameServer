@@ -363,6 +363,7 @@
     <ClInclude Include="VerifyResponsePacket.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldAttrs.h" />
+    <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\Desktop\minIni\minIni.c" />
