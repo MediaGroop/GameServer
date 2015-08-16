@@ -577,11 +577,20 @@
     <ClInclude Include="VerifyResponseHandler.h">
       <Filter>Заголовочные файлы\Server\Handlers</Filter>
     </ClInclude>
-    <ClInclude Include="VerifyResponsePacket.h">
-      <Filter>Заголовочные файлы</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Заголовочные файлы\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientState.h">
+      <Filter>Заголовочные файлы\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="VerifyResponsePacket.h">
+      <Filter>Заголовочные файлы\Server\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Заголовочные файлы\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadWorldPacket.h">
+      <Filter>Заголовочные файлы\Server\Packets</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -953,6 +962,9 @@
     </ClCompile>
     <ClCompile Include="VerifyResponsePacket.cpp">
       <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Файлы исходного кода\Server</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

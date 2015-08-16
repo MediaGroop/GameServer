@@ -1,4 +1,4 @@
-#include <btBulletDynamicsCommon.h>
+#pragma once
 #include <string>
 #include <thread>
 #include "WorldAttrs.h"
@@ -7,12 +7,16 @@
 
 using namespace std;
 #include <btBulletDynamicsCommon.h>
+#include "Entity.h"
 
 class World
 {
 public:
 	World(int, std::string, btVector3&);
 	~World();
+	void update(int);
+private:
+	std::list<Entity> entities;
 	btBroadphaseInterface* broadphase;
 	btDefaultCollisionConfiguration* collisionConfiguration;
 	btSequentialImpulseConstraintSolver* solver;
@@ -22,7 +26,5 @@ public:
 	std::string alias;
 	std::list<Chunk> chunks;
 	WorldAttrs* attrs;
-private:
 	std::thread* physicsTrd;
-	void update(int);
 };

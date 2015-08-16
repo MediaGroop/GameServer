@@ -1,5 +1,6 @@
 #pragma once
 #include "stdafx.h"
+#include "ClientState.h"
 
 class ConnectedClient
 {
@@ -7,7 +8,17 @@ private:
 	RakNet::AddressOrGUID addr;
 	//pass-session hash store for chaining
 	unsigned char hash[20];
+	ClientState state = CONNECTED;
 public:	
+
+	void setState(ClientState s){
+		state = s;
+	};
+
+	ClientState getState()
+	{
+		return state;
+	}
 
 	void setHash(unsigned char* h)
 	{
@@ -30,5 +41,7 @@ public:
 	}
 	virtual ~ConnectedClient(){};
 	virtual void onDisconnect(){};
+
+
 };
 
