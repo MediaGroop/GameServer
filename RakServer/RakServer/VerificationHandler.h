@@ -35,7 +35,7 @@ void handleVerify(RakNet::Packet *packet){
 		cc->setHash(hash);
 
 		VerifyPacket p(acc, hash);
-		p.send(poolerClient->peer, poolerClient->serverAddress);
+		p.send(poolerClient->getPeer(), *poolerClient->getServerAddr());
 
 		LOG(INFO) << "Verifying...";
 	}

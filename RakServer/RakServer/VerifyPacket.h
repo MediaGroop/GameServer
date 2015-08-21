@@ -1,5 +1,4 @@
 #pragma once
-#include "stdafx.h"
 #include "Packet.h"
 
 class VerifyPacket : public Packet

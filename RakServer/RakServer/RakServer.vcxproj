@@ -163,7 +163,7 @@
       <SDLCheck>false</SDLCheck>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <AdditionalIncludeDirectories>..\Deps\Rak-Net\Source;..\Deps\bullet3-2.83.5\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Deps\Rak-Net\Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FloatingPointModel>Fast</FloatingPointModel>
       <OmitFramePointers>false</OmitFramePointers>
     </ClCompile>
@@ -343,6 +343,8 @@
     <ClInclude Include="ClientState.h" />
     <ClInclude Include="ConfigLoader.h" />
     <ClInclude Include="ConnectedClient.h" />
+    <ClInclude Include="CreateWorldPacket.h" />
+    <ClInclude Include="DatabaseWorker.h" />
     <ClInclude Include="easylogging++.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FileManager.h" />
@@ -353,10 +355,12 @@
     <ClInclude Include="NetworkListener.h" />
     <ClInclude Include="Packet.h" />
     <ClInclude Include="PacketTypes.h" />
+    <ClInclude Include="PhysicsWorkerPackets.h" />
     <ClInclude Include="PoolerClientConnectHandler.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="ServerConnectHandler.h" />
     <ClInclude Include="ServVars.h" />
+    <ClInclude Include="Shapes.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UserState.h" />
@@ -364,6 +368,8 @@
     <ClInclude Include="VerifyPacket.h" />
     <ClInclude Include="VerifyResponseHandler.h" />
     <ClInclude Include="VerifyResponsePacket.h" />
+    <ClInclude Include="Worker.h" />
+    <ClInclude Include="WorkerAddEntityPacket.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="WorldAttrs.h" />
     <ClInclude Include="Utils.h" />
@@ -484,6 +490,8 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
     <ClCompile Include="ConnectedClient.cpp" />
+    <ClCompile Include="CreateWorldPacket.cpp" />
+    <ClCompile Include="DatabaseWorker.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="NetworkListener.cpp" />
@@ -492,18 +500,9 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="VerifyPacket.cpp" />
     <ClCompile Include="VerifyResponsePacket.cpp" />
+    <ClCompile Include="Worker.cpp" />
+    <ClCompile Include="WorkerAddEntityPacket.cpp" />
     <ClCompile Include="World.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\Desktop\bullet bin 2\src\BulletCollision\BulletCollision.vcxproj">
-      <Project>{0df566c8-c5b6-46b3-b836-66b28ddc995c}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Desktop\bullet bin 2\src\BulletDynamics\BulletDynamics.vcxproj">
-      <Project>{c7bb5227-9ce4-4a6f-92f2-1a544d10a553}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\..\Desktop\bullet bin 2\src\LinearMath\LinearMath.vcxproj">
-      <Project>{4929769d-fecb-4aea-b008-f3bb5f14967b}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,20 +6,70 @@
 class Client
 {
 private:
-	static void startNetworkTrd(Client*, std::string, int);
-public:
-	Client(NetworkListener * l){
-		this->listener = l;
-	};
-	~Client(){};
-	NetworkListener* listener;
-	
-	//RakNet::TCPInterface* sslClient;
-	RakNet::SystemAddress serverAddress;
+	NetworkListener* _listener;
 
-	RakNet::RakPeerInterface *peer;
-	std::thread* networkTrd;
-	bool running = false;
+	RakNet::SystemAddress _serverAddress;
+
+	bool _running = false;
+
+	RakNet::RakPeerInterface *_peer;
+
+	std::thread* _networkTrd;
+
+	static void startNetworkTrd(Client*, std::string, int);
+
+public:
+
+	bool getRunning()
+	{
+		return _running;
+	};
+
+	void setRunning(bool r)
+	{
+		this->_running = r;
+	};
+
+	void setPeer(RakNet::RakPeerInterface* i)
+	{
+		this->_peer = i;
+	};
+
+	void setServerAddr(RakNet::SystemAddress a)
+	{
+		this->_serverAddress = a;
+	};
+
+	void setThread(std::thread* trd)
+	{
+		this->_networkTrd = trd;
+	};
+
+	RakNet::SystemAddress* getServerAddr()
+	{
+		return &_serverAddress;
+	};
+
+	std::thread* getThread()
+	{
+		return _networkTrd;
+	};
+
+	RakNet::RakPeerInterface* getPeer(){
+		return _peer;
+	};
+
+	NetworkListener* getListener(){
+		return _listener;
+	};
+
+	Client(NetworkListener * l){
+		this->_listener = l;
+		setPeer(RakNet::RakPeerInterface::GetInstance());
+	};
+
+	~Client(){};
+	
 	void connect(std::string host, int port);
 
 };

@@ -3,28 +3,26 @@
 
 void Client::startNetworkTrd(Client* clnt, std::string h, int port)
 {
-	clnt->peer = RakNet::RakPeerInterface::GetInstance();
 	RakNet::Packet *packet;
 
 	RakNet::SocketDescriptor sd;
-	clnt->peer->Startup(1, &sd, 1);
-	clnt->peer->Connect(h.c_str(), port, 0, 0);
-	clnt->running = true;
-	while (clnt->running)
+	clnt->getPeer()->Startup(1, &sd, 1);
+	clnt->getPeer()->Connect(h.c_str(), port, 0, 0);
+	clnt->setRunning(true);
+	while (clnt->getRunning())
 	{
 		Sleep(1);
-		for (packet = clnt->peer->Receive(); packet; clnt->peer->DeallocatePacket(packet), packet = clnt->peer->Receive())
+		for (packet = clnt->getPeer()->Receive(); packet; clnt->getPeer()->DeallocatePacket(packet), packet = clnt->getPeer()->Receive())
 		{
-			clnt->listener->handle(packet);
+			clnt->getListener()->handle(packet);
 		}
 	}
-	clnt->peer->CloseConnection(clnt->serverAddress, true);
-	clnt->peer->Shutdown(1);
-	RakNet::RakPeerInterface::DestroyInstance(clnt->peer);
+	clnt->getPeer()->CloseConnection(*clnt->getServerAddr(), true);
+	clnt->getPeer()->Shutdown(10.0);
+	RakNet::RakPeerInterface::DestroyInstance(clnt->getPeer());
 }
 
 void Client::connect(std::string host, int port)
 {
-	static std::thread trs(startNetworkTrd, this,  host, port);
-	this->networkTrd = &trs;
+	this->setThread(new std::thread(startNetworkTrd, this, host, port));
 }

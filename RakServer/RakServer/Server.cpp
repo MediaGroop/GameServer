@@ -4,25 +4,25 @@
 #include "ConfigLoader.h"
 
 void Server::startMainNetworkThread(Server* instance, int port, int maxPlayers){
-	instance->peer = RakNet::RakPeerInterface::GetInstance();
+	instance->setPeer(RakNet::RakPeerInterface::GetInstance());
 	RakNet::Packet *packet;
 
 	RakNet::SocketDescriptor sd(port, 0);
-	instance->peer->Startup(maxPlayers, &sd, 1);
+	instance->getPeer()->Startup(maxPlayers, &sd, 1);
 	LOG(INFO) << "Starting the server...";
-	instance->peer->SetMaximumIncomingConnections(maxPlayers);
+	instance->getPeer()->SetMaximumIncomingConnections(maxPlayers);
 	LOG(INFO) << "Server has been started! Listening for conections...";
-	instance->networkRunning = true;
-	while (instance->networkRunning)
+	instance->setRunning(true);
+	while (instance->getRunning())
 	{
 		Sleep(1);
-		for (packet = instance->peer->Receive(); packet; instance->peer->DeallocatePacket(packet), packet = instance->peer->Receive())
+		for (packet = instance->getPeer()->Receive(); packet; instance->getPeer()->DeallocatePacket(packet), packet = instance->getPeer()->Receive())
 		{
-			instance->listener->handle(packet);
+			instance->getListener()->handle(packet);
 		}
 	}
-
-	RakNet::RakPeerInterface::DestroyInstance(instance->peer);
+	instance->getPeer()->Shutdown(10.0);
+	RakNet::RakPeerInterface::DestroyInstance(instance->getPeer());
 }
 
 bool Server::hasClient(RakNet::RakNetGUID guid)

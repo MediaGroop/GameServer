@@ -3,28 +3,23 @@
 #include <thread>
 #include "WorldAttrs.h"
 #include "Chunk.h"
+#include "Entity.h"
 #include <list>
+#include <map>
 
 using namespace std;
-#include <btBulletDynamicsCommon.h>
-#include "Entity.h"
 
 class World
 {
 public:
-	World(int, std::string, btVector3&);
+	World(int, std::string, float x, float y, float z);
 	~World();
 	void update(int);
 private:
-	std::list<Entity> entities;
-	btBroadphaseInterface* broadphase;
-	btDefaultCollisionConfiguration* collisionConfiguration;
-	btSequentialImpulseConstraintSolver* solver;
-	btDiscreteDynamicsWorld* dynamicsWorld;
-	btCollisionDispatcher* dispatcher;
-	int id;
-	std::string alias;
-	std::list<Chunk> chunks;
-	WorldAttrs* attrs;
-	std::thread* physicsTrd;
+	std::map<int, Entity> _entities;
+	int _id;
+	std::string _name;
+	std::list<Chunk> _chunks;
+	WorldAttrs* _attrs;
+	std::thread* _updateTrd;
 };

@@ -75,7 +75,7 @@ int main(int argc, const char** argv)
 	
 	mainServer = &srv;
 	std::thread trd(mainServer->startMainNetworkThread, mainServer, ConfigLoader::getIntVal("Network-ServerPort"), ConfigLoader::getIntVal("Network-MaxPlayers"));
-	mainServer->networkTrd = &trd;
+	mainServer->setThread(&trd);
 	//Server end
 
 	//Client init
@@ -90,14 +90,18 @@ int main(int argc, const char** argv)
 	poolerClient->connect(ConfigLoader::getVal("Network-PoolerAddress"), ConfigLoader::getIntVal("Network-PoolerPort"));
 	//Client end
 
+	physicsWorker = new Worker("phy", ConfigLoader::getVal("PhysicsWorker-Address"), ConfigLoader::getIntVal("PhysicsWorker-Port"));
+	databaseWorker = new DatabaseWorker();
+
+
 	//TODO: start command reader loop
 	cin >> str;//Just for blocking
 
-	poolerClient->running = false;
-	poolerClient->networkTrd->join();
+	poolerClient->setRunning(false);
+	poolerClient->getThread()->join();
 
-	mainServer->networkRunning = false;
-	mainServer->networkTrd->join();
+	mainServer->setRunning(false);
+	mainServer->getThread()->join();
 
 	return 0;
 }

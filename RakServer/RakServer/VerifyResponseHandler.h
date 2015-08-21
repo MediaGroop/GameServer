@@ -17,7 +17,7 @@ void verifyResultHandler(RakNet::Packet *packet){
 		bsIn.Read(hash[i]);
 	}
 
-	for (map<RakNet::RakNetGUID, ConnectedClient>::iterator ii = mainServer->_connections.begin(); ii != mainServer->_connections.end(); ++ii)
+	for (map<RakNet::RakNetGUID, ConnectedClient>::iterator ii = mainServer->getConnections()->begin(); ii != mainServer->getConnections()->end(); ++ii)
 	{
 		if (compareHashes((*ii).second.getHash(), hash))
 		{
@@ -27,14 +27,14 @@ void verifyResultHandler(RakNet::Packet *packet){
 			{
 			case 0:
 				LOG(INFO) << "Verification success!";
-				p.send(mainServer->peer, (*ii).second.getAddrOrGUID());
+				p.send(mainServer->getPeer(), (*ii).second.getAddrOrGUID());
 				break;
 			case 1:
 				LOG(INFO) << "Verification failed!";
-				p.send(mainServer->peer, (*ii).second.getAddrOrGUID());
-				mainServer->peer->CloseConnection((*ii).second.getAddrOrGUID(), true);//disconnect client
+				p.send(mainServer->getPeer(), (*ii).second.getAddrOrGUID());
+				mainServer->getPeer()->CloseConnection((*ii).second.getAddrOrGUID(), true);//disconnect client
 				(*ii).second.onDisconnect();
-				mainServer->removeClient(mainServer->peer->GetGuidFromSystemAddress((*ii).second.getAddrOrGUID().systemAddress));
+				mainServer->removeClient(mainServer->getPeer()->GetGuidFromSystemAddress((*ii).second.getAddrOrGUID().systemAddress));
 				(*ii).second.onDisconnect();
 				break;
 			}

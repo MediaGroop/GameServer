@@ -25,6 +25,12 @@ void ConfigLoader::createDefault(std::string path){
 	ini.put("Database", "Password", "root");
 	ini.put("Database", "Host", "localhost");
 	ini.put("Database", "Port", "3306");
+	
+	ini.put("PhysicsWorker", "Address", "127.0.0.1");
+	ini.put("PhysicsWorker", "Port", "62656");
+
+	ini.put("DatabaseWorker", "Address", "127.0.0.1");
+	ini.put("DatabaseWorker", "Port", "62657");
 
 }
 //Returns config val (key must be like Section-Variable)
@@ -37,7 +43,7 @@ std::string ConfigLoader::getVal(std::string key)
 		}
 	}
 	LOG(ERROR) << "There's no value with given name!";
-	return NULL;
+	return "0";
 }
 //Returns config val, converted to int(Use only when you exactly know var type!)
 int ConfigLoader::getIntVal(std::string key)

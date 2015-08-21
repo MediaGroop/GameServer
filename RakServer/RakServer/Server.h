@@ -8,26 +8,68 @@ using namespace std;
 
 class Server
 {
+private:
+	RakNet::RakPeerInterface *_peer;
+	NetworkListener* _listener;
+
+	std::thread *_networkTrd;
+	bool _networkRunning = false;
+
+	map<RakNet::RakNetGUID, ConnectedClient> _connections;
 public:
+
+	void setPeer(RakNet::RakPeerInterface* i)
+	{
+		_peer = i;
+	}
+
+	RakNet::RakPeerInterface* getPeer(){
+		return _peer;
+	};
+
+	NetworkListener* getListener(){
+		return _listener;
+	};
+
+	void setThread(std::thread* trd)
+	{
+		_networkTrd = trd;
+	};
+
+	std::thread* getThread()
+	{
+		return _networkTrd;
+	};
+
+	void setRunning(bool r)
+	{
+		_networkRunning = r;
+	}
+
+	bool getRunning()
+	{
+		return _networkRunning;
+	}
+
+	map<RakNet::RakNetGUID, ConnectedClient>* getConnections()
+	{
+		return &_connections;
+	}
+
 	Server(NetworkListener * lis){
-		this->listener = lis;
+		this->_listener = lis;
 	};
 
 	static void startMainNetworkThread(Server*, int, int);
 
 	~Server(){};
-
-	RakNet::RakPeerInterface *peer;
-	NetworkListener* listener;
-
-	std::thread *networkTrd;
-	bool networkRunning = false;
-
-	map<RakNet::RakNetGUID, ConnectedClient> _connections;
 	
     void addClient(RakNet::RakNetGUID, ConnectedClient);
-    bool hasClient(RakNet::RakNetGUID);
-    ConnectedClient* getClient(RakNet::RakNetGUID);
+    
+	bool hasClient(RakNet::RakNetGUID);
+    
+	ConnectedClient* getClient(RakNet::RakNetGUID);
+	
 	void removeClient(RakNet::RakNetGUID);
 
 };
