@@ -1,7 +1,8 @@
 #pragma once
 #include "stdafx.h"
-#include "ServVars.h"
 #include "easylogging++.h"
+#include "ServVars.h"
+
 
 void handledisconn(RakNet::Packet *packet){
 	ConnectedClient* cc = mainServer->getClient(packet->guid);

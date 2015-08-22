@@ -1,10 +1,10 @@
 #pragma once
 #include "Worker.h"
 
-class DatabaseWorker : Worker
+class DatabaseWorker : public  Worker
 {
 public:
-	DatabaseWorker();
+	DatabaseWorker(RakNet::RPC4* r);
 	~DatabaseWorker();
 };
 

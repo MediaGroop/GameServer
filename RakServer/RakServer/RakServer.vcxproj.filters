@@ -613,6 +613,24 @@
     <ClInclude Include="DatabaseWorker.h">
       <Filter>Заголовочные файлы\Server</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicsWorkerConnectHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsWorker.h">
+      <Filter>Заголовочные файлы\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseWorkerHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="DbWorkerConnFailHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="PhyWorkConnFailHanler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="ConnToAuthFailHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -998,6 +1016,9 @@
     </ClCompile>
     <ClCompile Include="DatabaseWorker.cpp">
       <Filter>Файлы исходного кода\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsWorker.cpp">
+      <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

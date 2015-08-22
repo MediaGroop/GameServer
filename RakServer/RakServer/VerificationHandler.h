@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
-#include "ServVars.h"
 #include "VerifyPacket.h"
+#include "ServVars.h"
 
 //
 // Verification map:
@@ -13,6 +13,7 @@
 //		 ||														   		 ||
 //		 ||																 \/
 //		 \====================================================Game Server(Pooler client)
+
 void handleVerify(RakNet::Packet *packet){
 	ConnectedClient* cc = mainServer->getClient(packet->guid);
 	if (cc != nullptr)

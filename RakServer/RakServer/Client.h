@@ -69,7 +69,9 @@ public:
 	};
 
 	~Client(){};
-	
+
+	Client() :Client(new NetworkListener()){};
+
 	void connect(std::string host, int port);
 
 };

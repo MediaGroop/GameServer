@@ -1,9 +1,11 @@
 #pragma once
 #include "Server.h"
 #include "Client.h"
-#include "DatabaseWorker.h"
+#include "Worker.h"
+#include "World.h"
 
-static Server* mainServer;
-static Client* poolerClient;
-static Worker* physicsWorker;
-static DatabaseWorker* databaseWorker;
+extern Server* mainServer;
+extern Client* poolerClient;
+extern Worker* physicsWorker;
+extern Worker* databaseWorker;
+extern std::map<int, World> worlds;

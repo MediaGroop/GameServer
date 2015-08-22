@@ -1,18 +1,18 @@
 #include "Worker.h"
 
 
-Worker::Worker(char* c, std::string addr, int port)
+Worker::Worker(RakNet::RPC4* rp)
 {
-	this->_name = *new RakNet::RakString(c);
-	this->_client = new Client(new NetworkListener());
-	this->_client->connect(addr, port);
-	_rpc = new RakNet::RPC4();
-	this->_client->getPeer()->AttachPlugin(_rpc);
+	_rpc = rp;
+	this->_client = new Client();
+	this->_client->getPeer()->AttachPlugin(rp);
 }
 
+void Worker::start(std::string h, int port){
+	this->_client->connect(h, port);
+};
 
 Worker::~Worker()
 {
-	delete _client;
-	delete _rpc;
+	LOG(INFO) << "Worker dctor";
 }

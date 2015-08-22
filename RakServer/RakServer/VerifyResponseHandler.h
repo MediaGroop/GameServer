@@ -3,6 +3,7 @@
 #include "VerifyResponsePacket.h"
 #include "Utils.h"
 #include "easylogging++.h"
+#include "ServVars.h"
 
 void verifyResultHandler(RakNet::Packet *packet){
 	RakNet::BitStream bsIn(packet->data, packet->length, false);
@@ -17,7 +18,7 @@ void verifyResultHandler(RakNet::Packet *packet){
 		bsIn.Read(hash[i]);
 	}
 
-	for (map<RakNet::RakNetGUID, ConnectedClient>::iterator ii = mainServer->getConnections()->begin(); ii != mainServer->getConnections()->end(); ++ii)
+	for (std::map<RakNet::RakNetGUID, ConnectedClient>::iterator ii = mainServer->getConnections()->begin(); ii != mainServer->getConnections()->end(); ++ii)
 	{
 		if (compareHashes((*ii).second.getHash(), hash))
 		{
