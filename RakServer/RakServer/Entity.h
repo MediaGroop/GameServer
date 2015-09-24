@@ -7,6 +7,7 @@ private:
 	int _body_id;
 	float _x, _y, _z;
 	int _world_id;
+	std::list<Entity> _near;
 public:
 	int getId(){
 		return _id;

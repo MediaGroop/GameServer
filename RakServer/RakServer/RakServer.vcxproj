@@ -352,6 +352,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FileManager.h" />
     <ClInclude Include="GameServerDisconnectHandler.h" />
+    <ClInclude Include="GameTask.h" />
     <ClInclude Include="LoadWorldPacket.h" />
     <ClInclude Include="minGlue.h" />
     <ClInclude Include="minIni.h" />
@@ -500,6 +501,7 @@
     <ClCompile Include="DatabaseWorker.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FileManager.cpp" />
+    <ClCompile Include="GameTask.cpp" />
     <ClCompile Include="NetworkListener.cpp" />
     <ClCompile Include="PhysicsWorker.cpp" />
     <ClCompile Include="RakServer.cpp" />

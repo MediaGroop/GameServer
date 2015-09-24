@@ -631,6 +631,9 @@
     <ClInclude Include="ConnToAuthFailHandler.h">
       <Filter>Заголовочные файлы\Server\Handlers</Filter>
     </ClInclude>
+    <ClInclude Include="GameTask.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -1018,6 +1021,9 @@
       <Filter>Файлы исходного кода\Server</Filter>
     </ClCompile>
     <ClCompile Include="PhysicsWorker.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTask.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
