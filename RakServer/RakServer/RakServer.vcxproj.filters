@@ -70,9 +70,6 @@
     <ClInclude Include="minGlue.h">
       <Filter>Заголовочные файлы\Server</Filter>
     </ClInclude>
-    <ClInclude Include="minIni.h">
-      <Filter>Заголовочные файлы\Server</Filter>
-    </ClInclude>
     <ClInclude Include="NetworkListener.h">
       <Filter>Заголовочные файлы\Server</Filter>
     </ClInclude>
@@ -634,6 +631,33 @@
     <ClInclude Include="GameTask.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
+    <ClInclude Include="StateProcessor.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Stateable.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="PacketsPooler.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="FutureHandler.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="SyncWorker.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="SyncWorkerConnectHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="minIni.h">
+      <Filter>Заголовочные файлы\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMeeter.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSelectHandler.h">
+      <Filter>Заголовочные файлы\Server\Handlers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Client.cpp">
@@ -646,9 +670,6 @@
       <Filter>Файлы исходного кода\Server</Filter>
     </ClCompile>
     <ClCompile Include="FileManager.cpp">
-      <Filter>Файлы исходного кода\Server</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\Desktop\minIni\minIni.c">
       <Filter>Файлы исходного кода\Server</Filter>
     </ClCompile>
     <ClCompile Include="NetworkListener.cpp">
@@ -1024,6 +1045,27 @@
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
     <ClCompile Include="GameTask.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="StateProcessor.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="Stateable.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="PacketsPooler.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="FutureHandler.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="SyncWorker.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="minIni.c">
+      <Filter>Файлы исходного кода\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMeeter.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>

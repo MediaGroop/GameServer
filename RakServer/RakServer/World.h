@@ -25,6 +25,10 @@ public:
 	{
 		return _tPU;
 	}
+	Entity* getEntity(int id)
+	{
+		return &_entities.find(id)->second;
+	}
 private:
 	vector<GameTask> _tasks;
 	std::map<int, Entity> _entities;

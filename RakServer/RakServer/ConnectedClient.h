@@ -1,24 +1,26 @@
 #pragma once
 #include "stdafx.h"
 #include "ClientState.h"
+#include "Stateable.h"
 
-class ConnectedClient
+class ConnectedClient: public Stateable
 {
 private:
 	RakNet::AddressOrGUID addr;
 	//pass-session hash store for chaining
 	unsigned char hash[20];
-	ClientState state = CONNECTED;
+	//account id
+	RakNet::RakString _account;
 public:	
 
-	void setState(ClientState s){
-		state = s;
+	void setAccId(RakNet::RakString i)
+	{
+		_account = i;
 	};
 
-	ClientState getState()
-	{
-		return state;
-	}
+	RakNet::RakString getAccId(){
+		return _account;
+	};
 
 	void setHash(unsigned char* h)
 	{

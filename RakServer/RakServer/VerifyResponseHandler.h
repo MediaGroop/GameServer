@@ -11,17 +11,18 @@ void verifyResultHandler(RakNet::Packet *packet){
 
 	unsigned char hash[20];
 	unsigned char response;
-
+	RakNet::RakString accId;
 	bsIn.Read(response);
-
 	for (int i = 0; i < 20; ++i){
 		bsIn.Read(hash[i]);
 	}
-
+	bsIn.Read(accId);
+	
 	for (std::map<RakNet::RakNetGUID, ConnectedClient>::iterator ii = mainServer->getConnections()->begin(); ii != mainServer->getConnections()->end(); ++ii)
 	{
 		if (compareHashes((*ii).second.getHash(), hash))
 		{
+			(*ii).second.setAccId(accId);
 			VerifyResponsePacket p(response);
 			//dynamic hash equals
 			switch (response)
@@ -39,6 +40,7 @@ void verifyResultHandler(RakNet::Packet *packet){
 				(*ii).second.onDisconnect();
 				break;
 			}
+			break;
 		}
 	}
 };

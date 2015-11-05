@@ -32,6 +32,9 @@ void ConfigLoader::createDefault(std::string path){
 	ini.put("DatabaseWorker", "Address", "127.0.0.1");
 	ini.put("DatabaseWorker", "Port", "62657");
 
+	ini.put("SyncWorker", "Address", "127.0.0.1");
+	ini.put("SyncWorker", "Port", "66648");
+
 }
 //Returns config val (key must be like Section-Variable)
 std::string ConfigLoader::getVal(std::string key)

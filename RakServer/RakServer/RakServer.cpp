@@ -12,6 +12,8 @@
 #include "PacketTypes.h"
 #include "PhysicsWorker.h"
 #include "DatabaseWorker.h"
+#include "SyncWorker.h"
+#include "CharacterSelectHandler.h"
 
 #define ELPP_STL_LOGGING
 #define ELPP_PERFORMANCE_MICROSECONDS
@@ -38,7 +40,9 @@ Server* mainServer;
 Client* poolerClient;
 Worker* physicsWorker;
 Worker* databaseWorker;
+Worker* syncWorker;
 std::map<int, World> worlds;
+PacketsPooler* pPooler;
 
 //Configuring easyLogging
 void setupLog(){
@@ -80,12 +84,15 @@ int main(int argc, const char** argv)
 
 	physicsWorker = new PhysicsWorker(new RakNet::RPC4());
 	databaseWorker = new DatabaseWorker(new RakNet::RPC4());
+	syncWorker = new SyncWorker(new RakNet::RPC4());
+	pPooler = new PacketsPooler();
 
 	//Server init	
 	NetworkListener *listen = new NetworkListener();
 	listen->add((short)ID_NEW_INCOMING_CONNECTION, handleconn); // Server conenct handler
 	listen->add((short)ID_CONNECTION_LOST, handledisconn); // Server disconnect handler
 	listen->add((short)VERIFY_ACCOUNT, handleVerify); // Server data verification handler
+	listen->add((short)SELECT_CHARACTER, handleCharSelect); // Character choose handler
 
 	mainServer = new Server(listen);
 
@@ -105,6 +112,7 @@ int main(int argc, const char** argv)
 
 	physicsWorker->start(ConfigLoader::getVal("PhysicsWorker-Address"), ConfigLoader::getIntVal("PhysicsWorker-Port"));
 	databaseWorker->start(ConfigLoader::getVal("DatabaseWorker-Address"), ConfigLoader::getIntVal("DatabaseWorker-Port"));
+	syncWorker->start(ConfigLoader::getVal("SyncWorker-Address"), ConfigLoader::getIntVal("SyncWorker-Port"));
 
 	//TODO: start command reader loop
 	cin >> str;//Just for blocking
@@ -114,6 +122,12 @@ int main(int argc, const char** argv)
 
 	mainServer->setRunning(false);
 	mainServer->getThread()->join();
+
+	//Cleaning 
+	delete pPooler;
+	delete databaseWorker;
+	delete physicsWorker;
+	delete syncWorker;
 
 	return 0;
 }
