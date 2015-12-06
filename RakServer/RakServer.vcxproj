@@ -337,7 +337,9 @@
     <ClInclude Include="..\Deps\Rak-Net\Source\WSAStartupSingleton.h" />
     <ClInclude Include="..\Deps\Rak-Net\Source\XBox360Includes.h" />
     <ClInclude Include="..\Deps\Rak-Net\Source\_FindFirst.h" />
+    <ClInclude Include="AI.h" />
     <ClInclude Include="AuthPoolerPacket.h" />
+    <ClInclude Include="Avatar.h" />
     <ClInclude Include="CharacterSelectHandler.h" />
     <ClInclude Include="Chunk.h" />
     <ClInclude Include="Client.h" />
@@ -352,6 +354,7 @@
     <ClInclude Include="easylogging++.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="FileManager.h" />
+    <ClInclude Include="FInishLoadingWorldHandler.h" />
     <ClInclude Include="FutureHandler.h" />
     <ClInclude Include="GameServerDisconnectHandler.h" />
     <ClInclude Include="GameTask.h" />
@@ -500,7 +503,9 @@
     <ClCompile Include="..\Deps\Rak-Net\Source\VitaIncludes.cpp" />
     <ClCompile Include="..\Deps\Rak-Net\Source\WSAStartupSingleton.cpp" />
     <ClCompile Include="..\Deps\Rak-Net\Source\_FindFirst.cpp" />
+    <ClCompile Include="AI.cpp" />
     <ClCompile Include="AuthPoolerPacket.cpp" />
+    <ClCompile Include="Avatar.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ConfigLoader.cpp" />
     <ClCompile Include="ConnectedClient.cpp" />

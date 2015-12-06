@@ -30,6 +30,7 @@ void verifyResultHandler(RakNet::Packet *packet){
 			case 0:
 				LOG(INFO) << "Verification success!";
 				p.send(mainServer->getPeer(), (*ii).second.getAddrOrGUID());
+				(*ii).second.setState(VERIFIED);
 				break;
 			case 1:
 				LOG(INFO) << "Verification failed!";

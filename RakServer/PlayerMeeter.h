@@ -19,7 +19,7 @@ private:
 	~PlayerMeeter();
 	PlayerMeeter(PlayerMeeter const&);
 	void operator=(PlayerMeeter const&);
-	PlayerMeeter(PlayerMeeter const&) = delete;
-	void operator=(PlayerMeeter const&) = delete;
+//	PlayerMeeter(PlayerMeeter const&) = delete;
+//	void operator=(PlayerMeeter const&) = delete;
 };
 

@@ -2,7 +2,12 @@
 #include "WorkerAddEntityPacket.h"
 #include "ServVars.h"
 
-Entity::Entity(int i) :Entity(i, 0,0,0,0){};
+factory g_factory;
+
+Entity::Entity(){
+};
+
+Entity::Entity(int i) :Entity(i, 0, 0, 0, 0){};
 
 Entity::Entity(int i, float x, float y, float z) : Entity(i, x, y, z, 0){};
 
@@ -32,7 +37,7 @@ bool Entity::sync(Shapes shapes, float height, float radius, bool hasMass, float
 
 	bs.Write(this->_updateRadius);
 
-	databaseWorker->callRPC("ae", &bs);
+	syncWorker->callRPC("ae", &bs);
 	return true;
 };
 

@@ -9,6 +9,7 @@ void VerifyPacket::send(RakNet::RakPeerInterface * by, RakNet::AddressOrGUID to)
 
 	//Very simple packet structure
 	bsOut.Write(login);
+
 	for (int i = 0; i < 20; ++i)
 		bsOut.Write(hash[i]);
 	//****************************

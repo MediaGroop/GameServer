@@ -21,6 +21,7 @@
 #define ELPP_LOG_UNORDERED_MAP
 #define ELPP_UNORDERED_SET
 #define ELPP_THREAD_SAFE
+#define ELPP_EXPERIMENTAL_ASYNC 
 
 //Handlers
 //Server
@@ -77,6 +78,7 @@ void setupLog(){
 //Read config file
 int main(int argc, const char** argv)
 {
+	Entity::registerClasses();
 	char str[1];
 	setupLog();
 
@@ -105,7 +107,6 @@ int main(int argc, const char** argv)
 	clientListen->add((short)VERIFY_RESPONSE, verifyResultHandler); // VerifyResponseHandler.h
 	clientListen->add((short)ID_CONNECTION_ATTEMPT_FAILED, authConnFail); // ConnToAuthFailHandler.h
 
-
 	poolerClient = new Client(clientListen);
 	poolerClient->connect(ConfigLoader::getVal("Network-PoolerAddress"), ConfigLoader::getIntVal("Network-PoolerPort"));
 	//Client end
@@ -124,10 +125,10 @@ int main(int argc, const char** argv)
 	mainServer->getThread()->join();
 
 	//Cleaning 
-	delete pPooler;
-	delete databaseWorker;
-	delete physicsWorker;
-	delete syncWorker;
+	//delete pPooler;
+	//delete databaseWorker;
+	//delete physicsWorker;
+	//delete syncWorker;
 
 	return 0;
 }

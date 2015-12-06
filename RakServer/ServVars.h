@@ -7,8 +7,10 @@
 
 extern Server* mainServer;
 extern Client* poolerClient;
+
 extern Worker* physicsWorker;
 extern Worker* databaseWorker;
 extern Worker* syncWorker;
+
 extern std::map<int, World> worlds;
 extern PacketsPooler* pPooler;

@@ -12,8 +12,9 @@ bool PlayerMeeter::process(Stateable* s)
 
 bool PlayerMeeter::process(ConnectedClient* c)
 {
-	LoadWorldPacket* pckt = new LoadWorldPacket();
+	//LoadWorldPacket* pckt = new LoadWorldPacket();
 	c->setState(LOADING_WORLD);
+	return true;
 };
 
 PlayerMeeter::PlayerMeeter()

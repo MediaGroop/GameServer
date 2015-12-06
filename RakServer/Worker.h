@@ -45,15 +45,19 @@ public:
 	};
 
 	void callRPC(const char* funcName, RakNet::BitStream* bs){
-		_rpc->Signal(funcName, bs, HIGH_PRIORITY, RELIABLE_ORDERED, 0, *_client->getServerAddr(), false, true);
+		_rpc->Call(funcName, bs, HIGH_PRIORITY, RELIABLE_ORDERED, 0, *_client->getServerAddr(), false);
 	};
 
 	bool callRPCAndWait(const char* funcName, RakNet::BitStream* bs, RakNet::BitStream* out){
 		return _rpc->CallBlocking(funcName, bs, HIGH_PRIORITY, RELIABLE_ORDERED, 0, *_client->getServerAddr(), out);
 	};
 
+	void info(){
+		
+	};
+
 	void registerFunction(const char* c, void(*functionPointer) (RakNet::BitStream *userData, RakNet::Packet *packet)){
-		_rpc->RegisterSlot(c, functionPointer, 0);
+		_rpc->RegisterFunction(c, functionPointer);
 	};
 
 	Worker(RakNet::RPC4*);
