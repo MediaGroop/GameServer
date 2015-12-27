@@ -7,5 +7,6 @@ class Avatar :
 public:
 	Avatar();
 	virtual ~Avatar();
+	virtual void signal(Signal* s){};
 };
 

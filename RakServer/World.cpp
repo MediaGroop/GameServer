@@ -12,7 +12,7 @@ void World::update()
 		{
 			break;
 		}
-		_tasks[i].process();
+		_tasks[i]->process();
 		_tasks.erase(_tasks.begin() + i);
 	}
 }

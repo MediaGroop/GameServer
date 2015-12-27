@@ -337,6 +337,7 @@
     <ClInclude Include="..\Deps\Rak-Net\Source\WSAStartupSingleton.h" />
     <ClInclude Include="..\Deps\Rak-Net\Source\XBox360Includes.h" />
     <ClInclude Include="..\Deps\Rak-Net\Source\_FindFirst.h" />
+    <ClInclude Include="AddEntityTask.h" />
     <ClInclude Include="AI.h" />
     <ClInclude Include="AuthPoolerPacket.h" />
     <ClInclude Include="Avatar.h" />
@@ -371,10 +372,12 @@
     <ClInclude Include="PhyWorkConnFailHanler.h" />
     <ClInclude Include="PlayerMeeter.h" />
     <ClInclude Include="PoolerClientConnectHandler.h" />
+    <ClInclude Include="RemoveEntityTask.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="ServerConnectHandler.h" />
     <ClInclude Include="ServVars.h" />
     <ClInclude Include="Shapes.h" />
+    <ClInclude Include="Signal.h" />
     <ClInclude Include="Stateable.h" />
     <ClInclude Include="StateProcessor.h" />
     <ClInclude Include="stdafx.h" />
@@ -503,6 +506,7 @@
     <ClCompile Include="..\Deps\Rak-Net\Source\VitaIncludes.cpp" />
     <ClCompile Include="..\Deps\Rak-Net\Source\WSAStartupSingleton.cpp" />
     <ClCompile Include="..\Deps\Rak-Net\Source\_FindFirst.cpp" />
+    <ClCompile Include="AddEntityTask.cpp" />
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="AuthPoolerPacket.cpp" />
     <ClCompile Include="Avatar.cpp" />
@@ -521,7 +525,9 @@
     <ClCompile Include="PhysicsWorker.cpp" />
     <ClCompile Include="PlayerMeeter.cpp" />
     <ClCompile Include="RakServer.cpp" />
+    <ClCompile Include="RemoveEntityTask.cpp" />
     <ClCompile Include="Server.cpp" />
+    <ClCompile Include="Signal.cpp" />
     <ClCompile Include="Stateable.cpp" />
     <ClCompile Include="StateProcessor.cpp" />
     <ClCompile Include="stdafx.cpp" />

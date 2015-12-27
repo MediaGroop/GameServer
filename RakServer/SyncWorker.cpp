@@ -1,5 +1,7 @@
 #include "SyncWorker.h"
 #include "SyncWorkerConnectHandler.h"
+#include "AddEntityTask.h"
+#include "RemoveEntityTask.h"
 
 void addNear(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 {
@@ -10,11 +12,7 @@ void addNear(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	World* w = &(worlds.find(world_id)->second);
 	if (w != nullptr)
 	{
-		Entity* e = w->getEntity(dest);
-		Entity* e2 = w->getEntity(target);
-		if (e2 != nullptr && e != nullptr){
-			// Add entity code
-		}
+		w->pushTask(new AddEntityTask(w, target, dest));
 	}
 };
 
@@ -27,11 +25,7 @@ void removeNear(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	World* w = &(worlds.find(world_id)->second);
 	if (w != nullptr)
 	{
-		Entity* e = w->getEntity(dest);
-		Entity* e2 = w->getEntity(target);
-		if (e2 != nullptr && e != nullptr){
-			// Remove entity code
-		}
+		w->pushTask(new RemoveEntityTask(w, target, dest));
 	}
 };
 

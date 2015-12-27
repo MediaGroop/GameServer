@@ -47,8 +47,13 @@ public:
 		return *new RakNet::RakString(_name.c_str());
 	}
 
+	void pushTask(GameTask* t)
+	{
+		_tasks.insert(_tasks.end(), t);
+	}
+
 private:
-	vector<GameTask> _tasks;
+	vector<GameTask*> _tasks;
 	std::map<int, Entity> _entities;
 	bool _running;
 	int _id;

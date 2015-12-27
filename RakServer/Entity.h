@@ -3,10 +3,20 @@
 #include "Shapes.h"
 #include "Avatar.h"
 #include <list>
+#include "Signal.h"
 #include <map>
+#include <algorithm>
+#include <vector>
+#include "OnAddNearSignal.h"
+#include "OnRemoveNearSignal.h"
+#include "UpdateEntityTask.h"
+#include "ServVars.h"
 
 #define REGISTER_CLASS(t, n) g_factory.register_class<n>(t)
 #define CREATE_CLASS(t) g_factory.construct(t);
+
+#define CHUNK_WIDTH 512
+#define CHUNK_HEIGHT 512
 
 template <class T> void* constructor() { return (void*)new T(); }
 
@@ -42,9 +52,27 @@ private:
 	int _x_grid, _y_grid;
 	int _upcast_id;
 	int _updateRadius = 50;
-	std::list<Entity> _near;
+	std::vector<Entity*> _near;
 	Avatar* _controller;
 public:
+
+	void updateToSync(){
+		RakNet::BitStream bs;
+		bs.Write(_id);
+		bs.Write(_world_id);
+		bs.Write(_x);
+		bs.Write(_y);
+		bs.Write(_z);
+		syncWorker->callRPC("ue", &bs);
+	};
+
+	virtual void updateTo(Entity* e){
+		e->SignalController(new UpdateEntitySignal(this));
+	};
+
+	std::vector<Entity*>* getNear(){
+		return &_near;
+	}
 
 	static void registerClasses()
 	{
@@ -142,5 +170,79 @@ public:
 		//TODO: save physics data
 	};
 
+	void SignalController(Signal* s)
+	{
+		if (_controller != nullptr)
+			_controller->signal(s);
+	}
+
+	void WriteData(RakNet::BitStream* stream)
+	{
+		stream->Write(_id);
+		stream->Write(_body_id);
+		stream->Write(_x);
+		stream->Write(_y);
+		stream->Write(_z);
+	}
+
+	void removeNear(Entity* ent)
+	{
+		if (hasNear(ent))
+		{
+			std::remove(_near.begin(), _near.end(), ent);
+			SignalController(new OnRemoveNearSignal(ent));
+		}
+	}
+
+	void addNear(Entity* ent){
+		if (!hasNear(ent))
+		{
+			_near.insert(_near.end(), ent);
+			SignalController(new OnAddNearSignal(ent));
+		}
+	};
+
+	bool hasNear(Entity* from)
+	{
+		if (std::find(_near.begin(), _near.end(), from) != _near.end())
+			return true;
+		return false;
+	};
+
+	void setXYZ(float x, float y, float z)
+	{
+		this->_x = x;
+		this->_y = y;
+		this->_z = z;
+		this->_x_grid = x / CHUNK_WIDTH;
+		this->_y_grid = z / CHUNK_HEIGHT;
+		World* w = &worlds.find(this->_world_id)->second;
+		if (w != nullptr)
+		{
+			w->pushTask(new UpdateEntityTask(this));
+		}
+	};
+
+	float getX(){
+		return _x;
+	};
+
+	float getY(){
+		return _y;
+	};
+
+	float getZ(){
+		return _z;
+	};
+
+	void sendDataTo(ConnectedClient* to){
+		RakNet::BitStream bsOut;
+		bsOut.Write((RakNet::MessageID)ADD_ENTITY);
+		WriteData(&bsOut);
+		mainServer->getPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, to->getAddrOrGUID(), false);
+		sendAddData(to);
+	};
+
+	virtual void sendAddData(ConnectedClient* to){};
 	virtual ~Entity();
 };

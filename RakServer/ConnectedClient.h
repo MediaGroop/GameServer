@@ -70,6 +70,10 @@ public:
 
 	virtual ~ConnectedClient(){};
 
+	virtual void signal(Signal* s) override {
+		s->incapsulate(this);
+	};
+
 	virtual void onDisconnect(){};
 };
 
