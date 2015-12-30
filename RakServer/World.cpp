@@ -5,6 +5,7 @@
 
 void World::update()
 {
+	static GameTask* task = nullptr;
 	//LOG(INFO) << "update!";
 	for (int i = 0; i < this->_tasks.size(); ++i)
 	{
@@ -12,8 +13,10 @@ void World::update()
 		{
 			break;
 		}
-		_tasks[i]->process();
+		task = _tasks[i];
+		task->process();
 		_tasks.erase(_tasks.begin() + i);
+		delete task;
 	}
 }
 
@@ -37,4 +40,34 @@ World::World(int i, std::string name, float x, float y, float z): _id(i), _name(
 
 World::~World(){
 
+}
+
+bool World::getRunning()
+{
+	return _running;
+};
+
+void World::addEntity(Entity* e)
+{
+	_entities[e->getId()] = *e;
+	//TODO: add to chunk?
+}
+
+int World::getTPU()
+{
+	return _tPU;
+};
+
+Entity* World::getEntity(int id)
+{
+	return &_entities.find(id)->second;
+};
+
+RakNet::RakString World::getName(){
+	return *new RakNet::RakString(_name.c_str());
+}
+
+void World::pushTask(GameTask* t)
+{
+	_tasks.insert(_tasks.end(), t);
 }

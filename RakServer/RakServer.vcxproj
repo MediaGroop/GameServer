@@ -363,6 +363,8 @@
     <ClInclude Include="minGlue.h" />
     <ClInclude Include="minIni.h" />
     <ClInclude Include="NetworkListener.h" />
+    <ClInclude Include="OnAddNearSignal.h" />
+    <ClInclude Include="OnRemoveNearSignal.h" />
     <ClInclude Include="Packet.h" />
     <ClInclude Include="PacketsPooler.h" />
     <ClInclude Include="PacketTypes.h" />
@@ -384,6 +386,8 @@
     <ClInclude Include="SyncWorker.h" />
     <ClInclude Include="SyncWorkerConnectHandler.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="UpdateEntitySignal.h" />
+    <ClInclude Include="UpdateEntityTask.h" />
     <ClInclude Include="UserState.h" />
     <ClInclude Include="VerificationHandler.h" />
     <ClInclude Include="VerifyPacket.h" />
@@ -521,6 +525,8 @@
     <ClCompile Include="GameTask.cpp" />
     <ClCompile Include="minIni.c" />
     <ClCompile Include="NetworkListener.cpp" />
+    <ClCompile Include="OnAddNearSignal.cpp" />
+    <ClCompile Include="OnRemoveNearSignal.cpp" />
     <ClCompile Include="PacketsPooler.cpp" />
     <ClCompile Include="PhysicsWorker.cpp" />
     <ClCompile Include="PlayerMeeter.cpp" />
@@ -532,6 +538,8 @@
     <ClCompile Include="StateProcessor.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="SyncWorker.cpp" />
+    <ClCompile Include="UpdateEntitySignal.cpp" />
+    <ClCompile Include="UpdateEntityTask.cpp" />
     <ClCompile Include="VerifyPacket.cpp" />
     <ClCompile Include="VerifyResponsePacket.cpp" />
     <ClCompile Include="Worker.cpp" />

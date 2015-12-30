@@ -26,3 +26,56 @@ void Client::connect(std::string host, int port)
 {
 	this->setThread(new std::thread(startNetworkTrd, this, host, port));
 }
+
+
+bool Client::getRunning()
+{
+	return _running;
+};
+
+void Client::setRunning(bool r)
+{
+	this->_running = r;
+};
+
+void Client::setPeer(RakNet::RakPeerInterface* i)
+{
+	this->_peer = i;
+};
+
+void Client::setServerAddr(RakNet::SystemAddress a)
+{
+	this->_serverAddress = a;
+};
+
+void Client::setThread(std::thread* trd)
+{
+	this->_networkTrd = trd;
+};
+
+RakNet::SystemAddress* Client::getServerAddr()
+{
+	return &_serverAddress;
+};
+
+std::thread* Client::getThread()
+{
+	return _networkTrd;
+};
+
+RakNet::RakPeerInterface* Client::getPeer(){
+	return _peer;
+};
+
+NetworkListener* Client::getListener(){
+	return _listener;
+};
+
+Client::Client(NetworkListener * l){
+	this->_listener = l;
+	setPeer(RakNet::RakPeerInterface::GetInstance());
+};
+
+Client::~Client(){};
+
+Client::Client() :Client(new NetworkListener()){};

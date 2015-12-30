@@ -27,38 +27,21 @@ class Worker
 {
 private:
 	Client* _client;
+
 	RakNet::RPC4* _rpc;
 public:
 
-	void addHandler(short k, std::function<void(RakNet::Packet* p)> h){
-		_client->getListener()->add(k, h);
-	};
+	void addHandler(short k, std::function<void(RakNet::Packet* p)> h);
 
-	Client* getClient()
-	{
-		return _client;
-	};
+	Client* getClient();
 
-	void setClient(Client* c)
-	{
-		_client = c;
-	};
+	void setClient(Client* c);
 
-	void callRPC(const char* funcName, RakNet::BitStream* bs){
-		_rpc->Call(funcName, bs, HIGH_PRIORITY, RELIABLE_ORDERED, 0, *_client->getServerAddr(), false);
-	};
+	void callRPC(const char* funcName, RakNet::BitStream* bs);
 
-	bool callRPCAndWait(const char* funcName, RakNet::BitStream* bs, RakNet::BitStream* out){
-		return _rpc->CallBlocking(funcName, bs, HIGH_PRIORITY, RELIABLE_ORDERED, 0, *_client->getServerAddr(), out);
-	};
+	bool callRPCAndWait(const char* funcName, RakNet::BitStream* bs, RakNet::BitStream* out);
 
-	void info(){
-		
-	};
-
-	void registerFunction(const char* c, void(*functionPointer) (RakNet::BitStream *userData, RakNet::Packet *packet)){
-		_rpc->RegisterFunction(c, functionPointer);
-	};
+	void registerFunction(const char* c, void(*functionPointer) (RakNet::BitStream *userData, RakNet::Packet *packet));
 
 	Worker(RakNet::RPC4*);
 

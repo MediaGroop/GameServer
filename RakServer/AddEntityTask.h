@@ -9,7 +9,7 @@ private:
 	int toAdd, dest;
 	World* world;
 public:
-	AddEntityTask(World*,int, int);
+	AddEntityTask(World*, int, int);
 	~AddEntityTask();
 	virtual void process() override;
 };

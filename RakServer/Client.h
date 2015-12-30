@@ -20,57 +20,29 @@ private:
 
 public:
 
-	bool getRunning()
-	{
-		return _running;
-	};
+	bool getRunning();
 
-	void setRunning(bool r)
-	{
-		this->_running = r;
-	};
+	void setRunning(bool r);
 
-	void setPeer(RakNet::RakPeerInterface* i)
-	{
-		this->_peer = i;
-	};
+	void setPeer(RakNet::RakPeerInterface* i);
 
-	void setServerAddr(RakNet::SystemAddress a)
-	{
-		this->_serverAddress = a;
-	};
+	void setServerAddr(RakNet::SystemAddress a);
 
-	void setThread(std::thread* trd)
-	{
-		this->_networkTrd = trd;
-	};
+	void setThread(std::thread* trd);
 
-	RakNet::SystemAddress* getServerAddr()
-	{
-		return &_serverAddress;
-	};
+	RakNet::SystemAddress* getServerAddr();
 
-	std::thread* getThread()
-	{
-		return _networkTrd;
-	};
+	std::thread* getThread();
 
-	RakNet::RakPeerInterface* getPeer(){
-		return _peer;
-	};
+	RakNet::RakPeerInterface* getPeer();
 
-	NetworkListener* getListener(){
-		return _listener;
-	};
+	NetworkListener* getListener();
 
-	Client(NetworkListener * l){
-		this->_listener = l;
-		setPeer(RakNet::RakPeerInterface::GetInstance());
-	};
+	Client(NetworkListener * l);
 
-	~Client(){};
+	~Client();
 
-	Client() :Client(new NetworkListener()){};
+	Client();
 
 	void connect(std::string host, int port);
 

@@ -12,7 +12,7 @@ void addNear(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	World* w = &(worlds.find(world_id)->second);
 	if (w != nullptr)
 	{
-		w->pushTask(new AddEntityTask(w, target, dest));
+//		w->pushTask(new AddEntityTask(w, target, dest));
 	}
 };
 
@@ -25,7 +25,7 @@ void removeNear(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	World* w = &(worlds.find(world_id)->second);
 	if (w != nullptr)
 	{
-		w->pushTask(new RemoveEntityTask(w, target, dest));
+//		w->pushTask(new RemoveEntityTask(w, target, dest));
 	}
 };
 

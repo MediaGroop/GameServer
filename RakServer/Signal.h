@@ -1,8 +1,8 @@
 #pragma once
-#include "Avatar.h"
-#include "AI.h"
-#include "ConnectedClient.h"
-
+//#include "ConnectedClient.h"
+//#include "AI.h"
+class ConnectedClient;
+class AI;
 class Signal
 {
 public:

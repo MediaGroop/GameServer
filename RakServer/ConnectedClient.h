@@ -20,60 +20,30 @@ private:
 	Entity* _controlled_unit;
 public:	
 
-	void set_controlled_unit(Entity* s)
-	{
-		this->_controlled_unit = s;
-		s->set_controller(this);
-	};
+	void set_controlled_unit(Entity* s);
 
-	Entity* get_controlled_unit(){
-		return _controlled_unit;
-	};
+	Entity* get_controlled_unit();
 
-	RakNet::RakString getChar(){
-		return _char;
-	};
+	RakNet::RakString getChar();
 
-	void setChar(RakNet::RakString i)
-	{
-		_char = i;
-	};
+	void setChar(RakNet::RakString i);
 
-	void setAccId(RakNet::RakString i)
-	{
-		_account = i;
-	};
+	void setAccId(RakNet::RakString i);
 
-	RakNet::RakString getAccId(){
-		return _account;
-	};
+	RakNet::RakString getAccId();
 
-	void setHash(unsigned char* h)
-	{
-		for (int i = 0; i < 20; ++i)
-			hash[i] = h[i];
-	};
+	void setHash(unsigned char* h);
 
-	unsigned char* getHash()
-	{
-		return hash;
-	};
+	unsigned char* getHash();
 
-	RakNet::AddressOrGUID getAddrOrGUID()
-	{
-		return addr;
-	};
+	RakNet::AddressOrGUID getAddrOrGUID();
 
-	ConnectedClient(RakNet::AddressOrGUID a){
-		this->addr = a;
-	};
+	ConnectedClient(RakNet::AddressOrGUID a);
 
-	virtual ~ConnectedClient(){};
+	virtual ~ConnectedClient();
 
-	virtual void signal(Signal* s) override {
-		s->incapsulate(this);
-	};
+	virtual void signal(Signal* s) override;
 
-	virtual void onDisconnect(){};
+	virtual void onDisconnect();
 };
 

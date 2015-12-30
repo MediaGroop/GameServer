@@ -1,5 +1,6 @@
 #pragma once
 #include "Stateable.h"
+class Signal;
 
 class Avatar :
 	public Stateable

@@ -1,16 +1,14 @@
 #pragma once
 #include "stdafx.h"
-#include "Shapes.h"
 #include "Avatar.h"
 #include <list>
-#include "Signal.h"
 #include <map>
 #include <algorithm>
 #include <vector>
-#include "OnAddNearSignal.h"
-#include "OnRemoveNearSignal.h"
-#include "UpdateEntityTask.h"
-#include "ServVars.h"
+#include "Shapes.h"
+
+class Signal;
+class ConnectedClient;
 
 #define REGISTER_CLASS(t, n) g_factory.register_class<n>(t)
 #define CREATE_CLASS(t) g_factory.construct(t);
@@ -56,54 +54,23 @@ private:
 	Avatar* _controller;
 public:
 
-	void updateToSync(){
-		RakNet::BitStream bs;
-		bs.Write(_id);
-		bs.Write(_world_id);
-		bs.Write(_x);
-		bs.Write(_y);
-		bs.Write(_z);
-		syncWorker->callRPC("ue", &bs);
-	};
+	virtual void updateTo(Entity* e);
 
-	virtual void updateTo(Entity* e){
-		e->SignalController(new UpdateEntitySignal(this));
-	};
+	std::vector<Entity*>* getNear();
 
-	std::vector<Entity*>* getNear(){
-		return &_near;
-	}
+	static void registerClasses();
 
-	static void registerClasses()
-	{
-		REGISTER_CLASS(-1, Entity);
-	}
+	void set_controller(Avatar* a);
 
-	void set_controller(Avatar* a){
-		_controller = a;
-	}
+	Avatar* get_controller();
 
-	Avatar* get_controller(){
-		return _controller;
-	}
+	int getId();
 
-	int getId(){
-		return _id;
-	};
+	void setWorldId(int i);
 
-	void setWorldId(int i)
-	{
-		_world_id = i;
-	}
+	void setId(int i);
 
-	void setId(int i){
-		_id = i;
-	}
-
-	int getBodyId()
-	{
-		return _body_id;
-	};
+	int getBodyId();
 
 	bool sync(Shapes, float, float, bool, float);
 
@@ -114,135 +81,29 @@ public:
 	Entity(int, float, float, float, int, int); // entity id, x, y, z, body id, worldId
 	Entity(int, float, float, float, int, int, int); // entity id, x, y, z, body id, worldId, upcastId
 
-	virtual void loadData(RakNet::BitStream* bitStream){
+	virtual void loadData(RakNet::BitStream* bitStream);
 
-		float height, mass, radius;
-		char shapeId;
-		bool hasMass, has_ph_data;
-		bitStream->Read(_id);
+	virtual void saveData(RakNet::BitStream* bitStream);
 
-		bitStream->Read(_world_id);
-		bitStream->Read(_body_id);
-		//bitStream->Read(_upcast_id);
+	void SignalController(Signal* s);
+	
+	void WriteData(RakNet::BitStream* stream);
 
+	void removeNear(Entity* ent);
 
-		bitStream->Read(_x);
-		bitStream->Read(_y);
-		bitStream->Read(_z);
+	void addNear(Entity* ent);
 
-		bitStream->Read(_x_grid);
-		bitStream->Read(_y_grid);
+	bool hasNear(Entity* from);
 
-		bitStream->Read(has_ph_data);
-		if (has_ph_data)
-		{
-			bitStream->Read(shapeId);
-			bitStream->Read(height);
-			bitStream->Read(radius);
-			bitStream->Read(hasMass);
-			if (hasMass)
-			bitStream->Read(mass);
-		}
-		else
-		{
-			shapeId = 1;
-			height = 1;
-			radius = 1;
-			hasMass = true;
-			mass = 1;
-		}
+	void setXYZ(float x, float y, float z);
 
-		sync((Shapes)shapeId, height, radius, hasMass, mass);
-	};
+	float getX();
 
-	virtual void saveData(RakNet::BitStream* bitStream){
-		bitStream->Write(_id);
-		bitStream->Write(_body_id);
-		bitStream->Write(_world_id);
-		bitStream->Write(_upcast_id);
+	float getY();
 
-		bitStream->Write(_x_grid);
-		bitStream->Write(_y_grid);
-
-		bitStream->Write(_x);
-		bitStream->Write(_y);
-		bitStream->Write(_z);
-		//TODO: save physics data
-	};
-
-	void SignalController(Signal* s)
-	{
-		if (_controller != nullptr)
-			_controller->signal(s);
-	}
-
-	void WriteData(RakNet::BitStream* stream)
-	{
-		stream->Write(_id);
-		stream->Write(_body_id);
-		stream->Write(_x);
-		stream->Write(_y);
-		stream->Write(_z);
-	}
-
-	void removeNear(Entity* ent)
-	{
-		if (hasNear(ent))
-		{
-			std::remove(_near.begin(), _near.end(), ent);
-			SignalController(new OnRemoveNearSignal(ent));
-		}
-	}
-
-	void addNear(Entity* ent){
-		if (!hasNear(ent))
-		{
-			_near.insert(_near.end(), ent);
-			SignalController(new OnAddNearSignal(ent));
-		}
-	};
-
-	bool hasNear(Entity* from)
-	{
-		if (std::find(_near.begin(), _near.end(), from) != _near.end())
-			return true;
-		return false;
-	};
-
-	void setXYZ(float x, float y, float z)
-	{
-		this->_x = x;
-		this->_y = y;
-		this->_z = z;
-		this->_x_grid = x / CHUNK_WIDTH;
-		this->_y_grid = z / CHUNK_HEIGHT;
-		World* w = &worlds.find(this->_world_id)->second;
-		if (w != nullptr)
-		{
-			w->pushTask(new UpdateEntityTask(this));
-		}
-	};
-
-	float getX(){
-		return _x;
-	};
-
-	float getY(){
-		return _y;
-	};
-
-	float getZ(){
-		return _z;
-	};
-
-	void sendDataTo(ConnectedClient* to){
-		RakNet::BitStream bsOut;
-		bsOut.Write((RakNet::MessageID)ADD_ENTITY);
-		WriteData(&bsOut);
-		mainServer->getPeer()->Send(&bsOut, HIGH_PRIORITY, RELIABLE_ORDERED, 0, to->getAddrOrGUID(), false);
-		sendAddData(to);
-	};
+	float getZ();
 
 	virtual void sendAddData(ConnectedClient* to){};
+	
 	virtual ~Entity();
 };

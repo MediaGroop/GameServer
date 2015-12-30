@@ -2,7 +2,8 @@
 #include "ConfigLoader.h"
 #include "PhysicsWorkerConnectHandler.h"
 #include "PhyWorkConnFailHanler.h"
-
+#include "PacketTypes.h"
+#include "UpdateEntityTask.h"
 
 void onUpdateEnt(RakNet::Packet* p)
 {
@@ -22,6 +23,10 @@ void onUpdateEnt(RakNet::Packet* p)
 		if (ent != nullptr)
 		{
 			ent->setXYZ(x, y, z);
+			if (w != nullptr)
+			{
+				w->pushTask(new UpdateEntityTask(ent));
+			}
 		}
 	}
 };

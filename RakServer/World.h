@@ -22,35 +22,17 @@ public:
 	
 	void update();
 	
-	bool getRunning()
-	{
-		return _running;
-	};
+	bool getRunning();
 	
-	void addEntity(Entity* e)
-	{
-		_entities[e->getId()] = *e;
-		//TODO: add to chunk?
-	}
+	void addEntity(Entity* e);
 
-	int getTPU()
-	{
-		return _tPU;
-	};
+	int getTPU();
 	
-	Entity* getEntity(int id)
-	{
-		return &_entities.find(id)->second;
-	};
+	Entity* getEntity(int id);
 
-	RakNet::RakString getName(){
-		return *new RakNet::RakString(_name.c_str());
-	}
+	RakNet::RakString getName();
 
-	void pushTask(GameTask* t)
-	{
-		_tasks.insert(_tasks.end(), t);
-	}
+	void pushTask(GameTask* t);
 
 private:
 	vector<GameTask*> _tasks;

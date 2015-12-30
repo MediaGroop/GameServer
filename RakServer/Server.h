@@ -18,47 +18,23 @@ private:
 	map<RakNet::RakNetGUID, ConnectedClient> _connections;
 public:
 
-	void setPeer(RakNet::RakPeerInterface* i)
-	{
-		_peer = i;
-	}
+	void setPeer(RakNet::RakPeerInterface* i);
 
-	RakNet::RakPeerInterface* getPeer(){
-		return _peer;
-	};
+	RakNet::RakPeerInterface* getPeer();
 
-	NetworkListener* getListener(){
-		return _listener;
-	};
+	NetworkListener* getListener();
 
-	void setThread(std::thread* trd)
-	{
-		_networkTrd = trd;
-	};
+	void setThread(std::thread* trd);
 
-	std::thread* getThread()
-	{
-		return _networkTrd;
-	};
+	std::thread* getThread();
 
-	void setRunning(bool r)
-	{
-		_networkRunning = r;
-	}
+	void setRunning(bool r);
 
-	bool getRunning()
-	{
-		return _networkRunning;
-	}
+	bool getRunning();
 
-	map<RakNet::RakNetGUID, ConnectedClient>* getConnections()
-	{
-		return &_connections;
-	}
+	map<RakNet::RakNetGUID, ConnectedClient>* getConnections();
 
-	Server(NetworkListener * lis){
-		this->_listener = lis;
-	};
+	Server(NetworkListener * lis);
 
 	static void startMainNetworkThread(Server*, int, int);
 

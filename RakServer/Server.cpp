@@ -58,3 +58,46 @@ void Server::removeClient(RakNet::RakNetGUID guid)
 	}
 	LOG(INFO) << "There's no client with given guid!";
 }
+
+
+void Server::setPeer(RakNet::RakPeerInterface* i)
+{
+	_peer = i;
+}
+
+RakNet::RakPeerInterface* Server::getPeer(){
+	return _peer;
+};
+
+NetworkListener* Server::getListener(){
+	return _listener;
+};
+
+void Server::setThread(std::thread* trd)
+{
+	_networkTrd = trd;
+};
+
+std::thread* Server::getThread()
+{
+	return _networkTrd;
+};
+
+void Server::setRunning(bool r)
+{
+	_networkRunning = r;
+}
+
+bool Server::getRunning()
+{
+	return _networkRunning;
+}
+
+map<RakNet::RakNetGUID, ConnectedClient>* Server::getConnections()
+{
+	return &_connections;
+}
+
+Server::Server(NetworkListener * lis){
+	this->_listener = lis;
+};

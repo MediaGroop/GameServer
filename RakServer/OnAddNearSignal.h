@@ -1,6 +1,6 @@
 #pragma once
 #include "Signal.h"
-#include "PacketTypes.h"
+#include "Entity.h"
 
 class OnAddNearSignal :
 	public Signal
@@ -14,11 +14,8 @@ public:
 	
 	~OnAddNearSignal();
 
-	virtual void incapsulate(ConnectedClient* a)override{
-		_ent->sendDataTo(a);
-	};
+	virtual void incapsulate(ConnectedClient* a)override;
 
-	virtual void incapsulate(AI* a)override{};
-
+	virtual void incapsulate(AI* a)override;
 };
 
