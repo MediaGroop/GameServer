@@ -104,13 +104,8 @@ void addWorld(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	LOG(INFO) << "Add world!";
 };
 
-DatabaseWorker::DatabaseWorker(RakNet::RPC4* r) : Worker(r)
+DatabaseWorker::DatabaseWorker() : Worker()
 {
-	this->registerFunction("aw", addWorld);
-	this->registerFunction("addEntity", addEnt);
-	this->registerFunction("se", setEntity);
-	this->registerFunction("sed", setEntityData);
-	
 	addHandler((short)ID_CONNECTION_REQUEST_ACCEPTED, workerConnected);
 	addHandler((short)ID_CONNECTION_ATTEMPT_FAILED, onFailConnect);
 }
@@ -118,4 +113,13 @@ DatabaseWorker::DatabaseWorker(RakNet::RPC4* r) : Worker(r)
 DatabaseWorker::~DatabaseWorker()
 {
 	LOG(INFO) << "dbWorker dctor";
+}
+
+void DatabaseWorker::init()
+{
+	this->registerFunction("aw", addWorld);
+	this->registerFunction("addEntity", addEnt);
+	this->registerFunction("se", setEntity);
+	this->registerFunction("sed", setEntityData);
+  
 }

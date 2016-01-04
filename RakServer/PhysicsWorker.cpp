@@ -31,7 +31,7 @@ void onUpdateEnt(RakNet::Packet* p)
 	}
 };
 
-PhysicsWorker::PhysicsWorker(RakNet::RPC4* r) : Worker(r)
+PhysicsWorker::PhysicsWorker() : Worker()
 {
 	addHandler((short)ID_CONNECTION_REQUEST_ACCEPTED, pWorkerConnected);
 	addHandler((short)ID_CONNECTION_ATTEMPT_FAILED, onFailPhyConnect);
@@ -43,3 +43,9 @@ PhysicsWorker::~PhysicsWorker()
 {
 	LOG(INFO) << "PWorker dctor";
 };
+
+void PhysicsWorker::init()
+{
+Worker::init();
+}
+

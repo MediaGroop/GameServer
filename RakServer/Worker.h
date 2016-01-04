@@ -4,23 +4,6 @@
 #include <functional>
 #include "RPC4Plugin.h"
 #include "easylogging++.h"
-/*                                                                   ____________________________________
-                                                                    |                __                  |
-Representation of a network worker									|			  __/OO\__               |
-Just ghost class for Client, using RPC calls for interaction        |	     ___//-- ||  --\\___         | 
-																	|	    //--     ||      --\\        |
-																	|			     ||                  |
-																	|				 ||                  |
-																	|				 ||                  |
-																	|				 ||                  |
-																	|			     ||                  |
-																	|			    /||\                 |
-																	|			   |0000|                |
-																	|			    \--/                 |
-																	|____________________________________|
-																	          \\\\|WORKER|////
-																	              \======/
-*/
 #include <functional>
 
 class Worker
@@ -28,7 +11,6 @@ class Worker
 private:
 	Client* _client;
 
-	RakNet::RPC4* _rpc;
 public:
 
 	void addHandler(short k, std::function<void(RakNet::Packet* p)> h);
@@ -43,9 +25,11 @@ public:
 
 	void registerFunction(const char* c, void(*functionPointer) (RakNet::BitStream *userData, RakNet::Packet *packet));
 
-	Worker(RakNet::RPC4*);
+	Worker();
 
-	void start(std::string h, int port);
+	void start(const char* h, int port);
 
 	virtual ~Worker();
+	
+	virtual void init();
 };

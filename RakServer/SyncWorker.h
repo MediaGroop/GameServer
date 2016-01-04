@@ -4,7 +4,8 @@ class SyncWorker :
 	public Worker
 {
 public:
-	SyncWorker(RakNet::RPC4* rpc);
+	SyncWorker();
 	~SyncWorker();
+	virtual void init() override;
 };
 

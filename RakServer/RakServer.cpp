@@ -1,9 +1,7 @@
 // RakServer.cpp: определяет точку входа для консольного приложения.
 //
 #include "stdafx.h"
-#include "easylogging++.h"
 #include "FileManager.h"
-#include <thread>
 #include "NetworkListener.h"
 #include "AuthPoolerPacket.h"
 #include "ConfigLoader.h"
@@ -14,14 +12,20 @@
 #include "DatabaseWorker.h"
 #include "SyncWorker.h"
 #include "CharacterSelectHandler.h"
+#include <stdio.h>  /* defines FILENAME_MAX */
 
-#define ELPP_STL_LOGGING
-#define ELPP_PERFORMANCE_MICROSECONDS
-#define ELPP_LOG_STD_ARRAY
-#define ELPP_LOG_UNORDERED_MAP
-#define ELPP_UNORDERED_SET
+#if defined(_WIN64) || defined(_WIN32)
+#include <thread>
+#else
+#include <pthread.h>
+#endif
+
 #define ELPP_THREAD_SAFE
-#define ELPP_EXPERIMENTAL_ASYNC 
+#define ELPP_STACKTRACE_ON_CRASH
+#define ELPP_DEBUG_ERRORS
+#define ELPP_FORCE_USE_STD_THREAD
+
+#include "easylogging++.h"
 
 //Handlers
 //Server
@@ -36,7 +40,7 @@
 
 INITIALIZE_EASYLOGGINGPP
 
-//Extern vars
+ //Extern vars
 Server* mainServer;
 Client* poolerClient;
 Worker* physicsWorker;
@@ -49,14 +53,14 @@ PacketsPooler* pPooler;
 void setupLog(){
 	time_t t;
 	t = time(0);
-	char str[64];
+	char str[FILENAME_MAX];
 
-	getcwd(str, 64);
-	if (!FileManager::DirExists(strcat(str, "\\logs\\"))){
-		mkdir(str);
+	getcwd(str, sizeof(str));
+	if (!FileManager::DirExists(strcat(str, "//logs//"))){
+		mkdir(str, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 	}
 
-	std::string log_name = "logs\\";
+	std::string log_name = "//logs//";
 	log_name.append(asctime(localtime(&t)));
 	log_name[log_name.length() - 1] = ' ';
 	log_name.append(".txt");
@@ -72,22 +76,23 @@ void setupLog(){
 	el::Loggers::reconfigureAllLoggers(el::ConfigurationType::Filename, log_name);
 }
 
-
 //Entry point
 //Configure log
 //Read config file
 int main(int argc, const char** argv)
 {
 	Entity::registerClasses();
-	char str[1];
 	setupLog();
-
+	LOG(INFO) << "Log is ready!";
 	ConfigLoader::init("config.ini");
-
-	physicsWorker = new PhysicsWorker(new RakNet::RPC4());
-	databaseWorker = new DatabaseWorker(new RakNet::RPC4());
-	syncWorker = new SyncWorker(new RakNet::RPC4());
+	LOG(INFO) << "Config is loaded!";
+	
+	physicsWorker = new PhysicsWorker();
+	databaseWorker = new DatabaseWorker();
+	syncWorker = new SyncWorker();
 	pPooler = new PacketsPooler();
+	
+	LOG(INFO) << "Setting up a server...";
 
 	//Server init	
 	NetworkListener *listen = new NetworkListener();
@@ -97,9 +102,20 @@ int main(int argc, const char** argv)
 	listen->add((short)SELECT_CHARACTER, handleCharSelect); // Character choose handler
 
 	mainServer = new Server(listen);
-
+#if defined(_WIN64) && defined(_WIN32)
 	mainServer->setThread(new std::thread(mainServer->startMainNetworkThread, mainServer, ConfigLoader::getIntVal("Network-ServerPort"), ConfigLoader::getIntVal("Network-MaxPlayers")));
+#else
+	pthread_t* trd = new pthread_t();
+	server_data data;
+	data.instance = mainServer;
+	data.max_players = ConfigLoader::getIntVal("Network-MaxPlayers");
+	data.port = ConfigLoader::getIntVal("Network-ServerPort");
+	pthread_create(trd, NULL, &mainServer->startMainNetworkThread, (void *)&data);
+	mainServer->setThread(trd);
+#endif
 	//Server end
+	
+	LOG(INFO) << "Setting up a pooler client...";
 
 	//Client init
 	NetworkListener* clientListen = new NetworkListener();
@@ -108,22 +124,28 @@ int main(int argc, const char** argv)
 	clientListen->add((short)ID_CONNECTION_ATTEMPT_FAILED, authConnFail); // ConnToAuthFailHandler.h
 
 	poolerClient = new Client(clientListen);
-	poolerClient->connect(ConfigLoader::getVal("Network-PoolerAddress"), ConfigLoader::getIntVal("Network-PoolerPort"));
+	LOG(INFO) << "Connecting pooler client...";
+	poolerClient->connect(ConfigLoader::getVal("Network-PoolerAddress").c_str(), ConfigLoader::getIntVal("Network-PoolerPort"));
 	//Client end
+	LOG(INFO) << "Starting workers...";
 
-	physicsWorker->start(ConfigLoader::getVal("PhysicsWorker-Address"), ConfigLoader::getIntVal("PhysicsWorker-Port"));
-	databaseWorker->start(ConfigLoader::getVal("DatabaseWorker-Address"), ConfigLoader::getIntVal("DatabaseWorker-Port"));
-	syncWorker->start(ConfigLoader::getVal("SyncWorker-Address"), ConfigLoader::getIntVal("SyncWorker-Port"));
+	physicsWorker->start(ConfigLoader::getVal("PhysicsWorker-Address").c_str(), ConfigLoader::getIntVal("PhysicsWorker-Port"));
+	databaseWorker->start(ConfigLoader::getVal("DatabaseWorker-Address").c_str(), ConfigLoader::getIntVal("DatabaseWorker-Port"));
+	syncWorker->start(ConfigLoader::getVal("SyncWorker-Address").c_str(), ConfigLoader::getIntVal("SyncWorker-Port"));
 
+	LOG(INFO) << "Game Server instance is ready!";
 	//TODO: start command reader loop
-	cin >> str;//Just for blocking
+	while(true){}
 
 	poolerClient->setRunning(false);
+#if defined(_WIN64) || defined(_WIN32)
 	poolerClient->getThread()->join();
-
+#endif
 	mainServer->setRunning(false);
+	
+#if defined(_WIN64) || defined(_WIN32)
 	mainServer->getThread()->join();
-
+#endif
 	//Cleaning 
 	//delete pPooler;
 	//delete databaseWorker;
@@ -132,4 +154,3 @@ int main(int argc, const char** argv)
 
 	return 0;
 }
-

@@ -20,7 +20,7 @@ Entity::Entity(int i, float x, float y, float z, int world) : Entity(i, x, y, z,
 Entity::Entity(int i, float x, float y, float z, int body, int world) : Entity(i, x, y, z, body, world, 0){};
 
 Entity::Entity(int i, float x, float y, float z, int body, int world, int upId) : _id(i), _x(x), _y(y), _z(z), _world_id(world), _body_id(body), _upcast_id(upId){
-
+	addNear(this);
 };
 
 // I dunno why it must return bool...

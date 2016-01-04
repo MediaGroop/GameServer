@@ -1,15 +1,15 @@
 #include "Worker.h"
 
 
-Worker::Worker(RakNet::RPC4* rp)
+Worker::Worker()
 {
-	_rpc = rp;
 	this->_client = new Client();
-	this->_client->getPeer()->AttachPlugin(rp);
 }
 
-void Worker::start(std::string h, int port){
+void Worker::start(const char* h, int port){
 	this->_client->connect(h, port);
+	while(!this->_client->getRunning()){}
+	init();
 };
 
 Worker::~Worker()
@@ -33,13 +33,18 @@ void Worker::setClient(Client* c)
 };
 
 void Worker::callRPC(const char* funcName, RakNet::BitStream* bs){
-	_rpc->Call(funcName, bs, HIGH_PRIORITY, RELIABLE_ORDERED, 0, *_client->getServerAddr(), false);
+    this->_client->getRPC()->Call(funcName, bs, HIGH_PRIORITY, RELIABLE_ORDERED, 0, *_client->getServerAddr(), false);
 };
 
 bool Worker::callRPCAndWait(const char* funcName, RakNet::BitStream* bs, RakNet::BitStream* out){
-	return _rpc->CallBlocking(funcName, bs, HIGH_PRIORITY, RELIABLE_ORDERED, 0, *_client->getServerAddr(), out);
+    return this->_client->getRPC()->CallBlocking(funcName, bs, HIGH_PRIORITY, RELIABLE_ORDERED, 0, *_client->getServerAddr(), out);
 };
 
 void Worker::registerFunction(const char* c, void(*functionPointer) (RakNet::BitStream *userData, RakNet::Packet *packet)){
-	_rpc->RegisterFunction(c, functionPointer);
+  this->_client->getRPC()->RegisterFunction(c, functionPointer);
+};
+
+void Worker::init()
+{
+
 };

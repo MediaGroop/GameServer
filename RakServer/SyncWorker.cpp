@@ -29,11 +29,8 @@ void removeNear(RakNet::BitStream *bitStream, RakNet::Packet *packet)
 	}
 };
 
-SyncWorker::SyncWorker(RakNet::RPC4* rpc) : Worker(rpc)
+SyncWorker::SyncWorker() : Worker()
 {
-
-	registerFunction("an", addNear);
-	registerFunction("rn", removeNear);
 	addHandler((short)ID_CONNECTION_REQUEST_ACCEPTED, sWorkerConnected);
 	//addHandler((short)ID_CONNECTION_ATTEMPT_FAILED, onFailPhyConnect);
 }
@@ -42,3 +39,10 @@ SyncWorker::SyncWorker(RakNet::RPC4* rpc) : Worker(rpc)
 SyncWorker::~SyncWorker()
 {
 }
+
+void SyncWorker::init()
+{
+	registerFunction("an", addNear);
+	registerFunction("rn", removeNear);
+}
+

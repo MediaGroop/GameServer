@@ -5,8 +5,10 @@ class PhysicsWorker :
 	public Worker
 {
 public:
-	PhysicsWorker(RakNet::RPC4*);
+	PhysicsWorker();
 
 	~PhysicsWorker();
+	
+	virtual void init() override;
 };
 

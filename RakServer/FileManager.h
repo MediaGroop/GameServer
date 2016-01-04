@@ -1,6 +1,5 @@
 #pragma once
 #include "stdafx.h"
-#include <io.h>
 #include <string>
 
 using namespace std;

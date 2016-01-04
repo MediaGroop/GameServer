@@ -4,7 +4,10 @@
 class DatabaseWorker : public  Worker
 {
 public:
-	DatabaseWorker(RakNet::RPC4* r);
+	DatabaseWorker();
+	
 	~DatabaseWorker();
+	
+	virtual void init() override;
 };
 

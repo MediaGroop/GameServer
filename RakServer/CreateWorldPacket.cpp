@@ -12,7 +12,7 @@ CreateWorldPacket::~CreateWorldPacket()
 
 void CreateWorldPacket::send(RakNet::RakPeerInterface * by, RakNet::AddressOrGUID to){
 	RakNet::BitStream bsOut;
-	bsOut.Write((RakNet::MessageID)CREATE_WORLD);
+	bsOut.Write((RakNet::MessageID)CREATE_WORLD_P);
 	bsOut.Write(_id);
 	bsOut.Write(_x);
 	bsOut.Write(_y);

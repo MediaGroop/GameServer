@@ -3,27 +3,9 @@
 #include "NetworkListener.h"
 #include "ConfigLoader.h"
 
-void Server::startMainNetworkThread(Server* instance, int port, int maxPlayers){
-	instance->setPeer(RakNet::RakPeerInterface::GetInstance());
-	RakNet::Packet *packet;
-
-	RakNet::SocketDescriptor sd(port, 0);
-	instance->getPeer()->Startup(maxPlayers, &sd, 1);
-	LOG(INFO) << "Starting the server...";
-	instance->getPeer()->SetMaximumIncomingConnections(maxPlayers);
-	LOG(INFO) << "Server has been started! Listening for conections...";
-	instance->setRunning(true);
-	while (instance->getRunning())
-	{
-		Sleep(1);
-		for (packet = instance->getPeer()->Receive(); packet; instance->getPeer()->DeallocatePacket(packet), packet = instance->getPeer()->Receive())
-		{
-			instance->getListener()->handle(packet);
-		}
-	}
-	instance->getPeer()->Shutdown(10.0);
-	RakNet::RakPeerInterface::DestroyInstance(instance->getPeer());
-}
+#if !defined(_WIN64) && !defined(_WIN32)
+#include <time.h>
+#endif
 
 bool Server::hasClient(RakNet::RakNetGUID guid)
 {
@@ -73,6 +55,8 @@ NetworkListener* Server::getListener(){
 	return _listener;
 };
 
+#if defined(_WIN64) && defined(_WIN32)
+
 void Server::setThread(std::thread* trd)
 {
 	_networkTrd = trd;
@@ -82,6 +66,79 @@ std::thread* Server::getThread()
 {
 	return _networkTrd;
 };
+
+void Server::startMainNetworkThread(Server* instance, int port, int maxPlayers){
+	instance->setPeer(RakNet::RakPeerInterface::GetInstance());
+	RakNet::Packet *packet;
+
+	RakNet::SocketDescriptor sd(port, 0);
+	instance->getPeer()->Startup(maxPlayers, &sd, 1);
+	LOG(INFO) << "Starting the server...";
+	instance->getPeer()->SetMaximumIncomingConnections(maxPlayers);
+	LOG(INFO) << "Server has been started! Listening for conections...";
+	instance->setRunning(true);
+	while (instance->getRunning())
+	{
+		Sleep(1);
+		for (packet = instance->getPeer()->Receive(); packet; instance->getPeer()->DeallocatePacket(packet), packet = instance->getPeer()->Receive())
+		{
+			instance->getListener()->handle(packet);
+		}
+	}
+	instance->getPeer()->Shutdown(10.0);
+	RakNet::RakPeerInterface::DestroyInstance(instance->getPeer());
+}
+
+#else
+
+void Server::setThread(pthread_t* trd)
+{
+	_networkTrd = trd;
+};
+
+pthread_t* Server::getThread()
+{
+	return _networkTrd;
+};
+
+void* Server::startMainNetworkThread(void* data){
+	LOG(INFO) << "Starting the server...";
+	
+	server_data* serv_data = (struct server_data *)data;
+	Server* instance = serv_data->instance;
+	int port = serv_data->port;
+	int maxPlayers = serv_data->max_players;
+	
+	//LOG(INFO) << "Data was read...";
+	RakNet::RakPeerInterface* inst = RakNet::RakPeerInterface::GetInstance();
+	instance->setPeer(inst);
+	RakNet::Packet *packet;
+    	//LOG(INFO) << "Instance assigned...";
+
+	RakNet::SocketDescriptor sd(port, 0);
+	instance->getPeer()->Startup(maxPlayers, &sd, 1);
+	instance->getPeer()->SetMaximumIncomingConnections(maxPlayers);
+	LOG(INFO) << "Server has been started! Listening for conections...";
+	instance->setRunning(true);
+	
+	struct timespec req;
+	req.tv_sec = 0;
+	req.tv_nsec = 25000L;
+	//LOG(INFO) << "Starting loop...";
+
+	while (instance->getRunning())
+	{
+		nanosleep(&req, NULL);
+		for (packet = instance->getPeer()->Receive(); packet; instance->getPeer()->DeallocatePacket(packet), packet = instance->getPeer()->Receive())
+		{
+			instance->getListener()->handle(packet);
+		}
+	}
+	instance->getPeer()->Shutdown(10.0);
+	RakNet::RakPeerInterface::DestroyInstance(instance->getPeer());
+}
+
+#endif
 
 void Server::setRunning(bool r)
 {

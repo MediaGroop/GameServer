@@ -8,9 +8,8 @@ void onLoadWorld(RakNet::Packet* p)
 	ConnectedClient* cc = mainServer->getClient(p->guid);
 	if (cc != nullptr)
 	{
-		//FIrst login
+		//First login
 		if (cc->getState() == VERIFIED){
-			// TODO: send their entity
 			cc->get_controlled_unit()->addNear(cc->get_controlled_unit()); // Adding itself
 		}
 		//World changing

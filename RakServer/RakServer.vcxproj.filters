@@ -79,6 +79,9 @@
     <Filter Include="Файлы исходного кода\Server\Signals">
       <UniqueIdentifier>{dfcbda5d-e44e-467b-84ba-1310d1670b09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Заголовочные файлы\Server\Structs">
+      <UniqueIdentifier>{20b857d6-ff0d-44df-a6fa-666ba8d11ee6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

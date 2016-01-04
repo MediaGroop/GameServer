@@ -1,7 +1,6 @@
 #include "World.h"
 #include "CreateWorldPacket.h"
 #include "ServVars.h"
-#define sleep Sleep(10)
 
 void World::update()
 {
@@ -22,9 +21,20 @@ void World::update()
 
 static void process(World* w)
 {
+#if defined(_WIN64) && defined(_WIN32)
+  
+#else
+  	struct timespec req={0};
+	req.tv_sec = 0;
+	req.tv_nsec = 25000L;	
+#endif
 	while (w->getRunning())
 	{
-		sleep;
+#if defined(_WIN64) && defined(_WIN32)
+	  Sleep(10);
+#else
+	  nanosleep(&req, NULL);
+#endif
 		w->update();
 	}
 }

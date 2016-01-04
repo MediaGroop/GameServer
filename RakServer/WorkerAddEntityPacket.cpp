@@ -25,7 +25,7 @@ if shape definition is SPHERE
 */
 void WorkerAddEntityPacket::send(RakNet::RakPeerInterface * by, RakNet::AddressOrGUID to){
 	RakNet::BitStream bsOut;
-	bsOut.Write((RakNet::MessageID)ADD_ENTITY);
+	bsOut.Write((RakNet::MessageID)ADD_ENTITY_P);
 	bsOut.Write(_worldId);
 	bsOut.Write(_entityId);
 	bsOut.Write(_x);
